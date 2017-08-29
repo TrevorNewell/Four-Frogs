@@ -2,7 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
+using System.Data;
+using System.Diagnostics;
 using System.Collections.Generic;
+
+
 
 namespace Monodemo
 {
@@ -25,6 +30,10 @@ namespace Monodemo
         private Song gameMusic;
 
         List<Block> blocks;
+        DataTable blockTable;
+        CSVUtil csv;
+
+        List<Enemy> enemies;
 
         public Game1()
         {
@@ -41,8 +50,14 @@ namespace Monodemo
         protected override void Initialize()
         {
             player = new Player();
+            csv = new CSVUtil();
             blocks = new List<Block>();
             blocks.Add(new Block());
+            blockTable = csv.ReadCSV("blocksPoi.csv");
+            Debug.Write(blockTable.Rows[0][0]);
+            
+            enemies = new List<Enemy>();
+            enemies.Add(new Enemy());
             rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             base.Initialize();
         }
@@ -55,13 +70,13 @@ namespace Monodemo
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + GraphicsDevice.Viewport.TitleSafeArea.Width / 2,
-                                                 GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
+            Vector2 playerPosition = new Vector2(400, 400);
             player.Initialize(Content.Load<Texture2D>("Graphics\\player"), playerPosition);
 
             //mainBackground = Content.Load<Texture2D>("Graphics\\bg");
 
-            blocks[0].Initialize(Content.Load<Texture2D>("graphics\\block0"), new Vector2(200f, 200f));
+            blocks[0].Initialize(Content.Load<Texture2D>("Graphics\\block0"), new Vector2(200f, 200f));
+            enemies[0].Initialize(Content.Load<Texture2D>("Graphics\\block0"), new Vector2(200f, 200f));
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
