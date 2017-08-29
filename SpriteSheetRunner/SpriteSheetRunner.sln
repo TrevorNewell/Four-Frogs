@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteSheetRunner", "SpriteSheetRunner\SpriteSheetRunner.csproj", "{5FD3C0C6-CBF8-4C8C-9319-CE95907251D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FD3C0C6-CBF8-4C8C-9319-CE95907251D5}.Debug|x86.ActiveCfg = Debug|x86
+		{5FD3C0C6-CBF8-4C8C-9319-CE95907251D5}.Debug|x86.Build.0 = Debug|x86
+		{5FD3C0C6-CBF8-4C8C-9319-CE95907251D5}.Release|x86.ActiveCfg = Release|x86
+		{5FD3C0C6-CBF8-4C8C-9319-CE95907251D5}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
