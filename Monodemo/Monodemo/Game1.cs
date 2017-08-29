@@ -2,12 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
-using System.Data;
-using System.Diagnostics;
 using System.Collections.Generic;
-
-
+using System;
 
 namespace Monodemo
 {
@@ -27,13 +23,15 @@ namespace Monodemo
         Texture2D mainBackground;
         Rectangle rectBackground;
 
+        Enemy enemy;
+        List<Enemy> enemies;
+        Texture2D enemyTexture;
+        TimeSpan enemySpawnTime;
+        TimeSpan previousSpawnTime;
+
         private Song gameMusic;
 
         List<Block> blocks;
-        DataTable blockTable;
-        CSVUtil csv;
-
-        List<Enemy> enemies;
 
         public Game1()
         {
@@ -50,15 +48,15 @@ namespace Monodemo
         protected override void Initialize()
         {
             player = new Player();
-            csv = new CSVUtil();
             blocks = new List<Block>();
             blocks.Add(new Block());
-            blockTable = csv.ReadCSV("blocksPoi.csv");
-            Debug.Write(blockTable.Rows[0][0]);
+            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+
             
             enemies = new List<Enemy>();
             enemies.Add(new Enemy());
-            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            previousSpawnTime = TimeSpan.Zero;
+            enemySpawnTime = TimeSpan.FromSeconds(1.0f);
             base.Initialize();
         }
 
@@ -70,18 +68,89 @@ namespace Monodemo
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Vector2 playerPosition = new Vector2(400, 400);
+            Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + GraphicsDevice.Viewport.TitleSafeArea.Width / 2,
+                                                 GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
             player.Initialize(Content.Load<Texture2D>("Graphics\\player"), playerPosition);
 
-            //mainBackground = Content.Load<Texture2D>("Graphics\\bg");
+            mainBackground = Content.Load<Texture2D>("Graphics\\BG");
 
-            blocks[0].Initialize(Content.Load<Texture2D>("Graphics\\block0"), new Vector2(200f, 200f));
-            enemies[0].Initialize(Content.Load<Texture2D>("Graphics\\block0"), new Vector2(200f, 200f));
+            blocks[0].Initialize(Content.Load<Texture2D>("graphics\\block0"), new Vector2(200f, 200f));
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
+
+            enemyTexture = Content.Load<Texture2D>("graphics\\Dustbunny01");
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].Initialize(enemyTexture, Vector2.Zero);
+            }
             // TODO: use this.Content to load your game content here
         }
+
+        private void AddEnemy()
+        {
+            Enemy e1 = new Enemy();
+            Enemy e2 = new Enemy();
+            Enemy e3 = new Enemy();
+            Enemy e4 = new Enemy();
+            Vector2 p1 = new Vector2(600, 100);
+            Vector2 p2 = new Vector2(100, 50);
+            Vector2 p3 = new Vector2(600, 300);
+            Vector2 p4 = new Vector2(100, 10);
+            
+
+            e1.Initialize(enemyTexture, p1);
+            enemies.Add(e1);
+            e2.Initialize(enemyTexture, p2);
+            enemies.Add(e2);
+            e3.Initialize(enemyTexture, p3);
+            enemies.Add(e3);
+            e4.Initialize(enemyTexture, p4);
+            enemies.Add(e4);
+
+
+
+
+
+            //Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2);
+            //ran.Next(100, (GraphicsDevice.Viewport.Height - 100));
+
+
+            //enemy.Initialize(enemyTexture, p3);
+
+            //enemies.Add(enemy);
+        }
+
+        private void UpdateEnemies(GameTime gameTime)
+        {
+            if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+            {
+                previousSpawnTime = gameTime.TotalGameTime;
+
+                AddEnemy();
+
+            }
+
+            for (int i = enemies.Count - 1; i >= 0; i--)
+             {
+
+                enemies[i].Update(gameTime);
+
+                if (enemies[i].Active == false)
+
+                {
+
+                    enemies.RemoveAt(i);
+
+                }
+
+            }
+
+        }
+
+
+
+
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -119,6 +188,9 @@ namespace Monodemo
                 player.DetectCol(blocks[i]);
             }
            
+            //Update the enemies
+            UpdateEnemies(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -155,9 +227,18 @@ namespace Monodemo
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            //spriteBatch.Draw(mainBackground, rectBackground, Color.White);
+            spriteBatch.Draw(mainBackground, rectBackground, Color.White);
+            //spriteBatch.Draw(mainBackground, new Rectangle(0, 0, 800, 480), Color.White);
             player.Draw(spriteBatch);
             blocks[0].Draw(spriteBatch);
+
+            for (int i = 0; i < enemies.Count; i++)
+                { 
+                    enemies[i].Draw(spriteBatch);
+                }
+
+
+
             spriteBatch.End();
 
             base.Draw(gameTime);

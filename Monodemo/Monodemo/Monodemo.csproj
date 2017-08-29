@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="Block.cs" />
-    <Compile Include="CSVUtil.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Player.cs" />
@@ -55,7 +54,6 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
