@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using monodemo;
+using System.Collections.Generic;
 
 namespace Monodemo
 {
@@ -18,22 +18,18 @@ namespace Monodemo
         KeyboardState previousKeyboardState;
         GamePadState currentGamePadState;
         GamePadState previousGamePadState;
-        MouseState currentMouseState;
-        MouseState previousMouseState;
-        //float playerMoveSpeed;
 
-        // Image used to display the static background
         Texture2D mainBackground;
         Rectangle rectBackground;
-        float scale = 1f;
 
         private Song gameMusic;
+
+        List<Block> blocks;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-            
+            Content.RootDirectory = "Content";           
         }
 
         /// <summary>
@@ -44,10 +40,10 @@ namespace Monodemo
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             player = new Player();
-            //playerMoveSpeed = 8.0f;
-            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width * 2, GraphicsDevice.Viewport.Height * 2);
+            blocks = new List<Block>();
+            blocks.Add(new Block());
+            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             base.Initialize();
         }
 
@@ -63,7 +59,9 @@ namespace Monodemo
                                                  GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
             player.Initialize(Content.Load<Texture2D>("Graphics\\player"), playerPosition);
 
-            mainBackground = Content.Load<Texture2D>("Graphics\\bg");
+            //mainBackground = Content.Load<Texture2D>("Graphics\\bg");
+
+            blocks[0].Initialize(Content.Load<Texture2D>("graphics\\block0"), new Vector2(200f, 200f));
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
@@ -97,34 +95,41 @@ namespace Monodemo
             currentKeyboardState = Keyboard.GetState();
             currentGamePadState = GamePad.GetState(PlayerIndex.One);
 
-            //Update the player
-            player.Update(gameTime);
+            //Update the player            
+            player.Update();
             UpdatePlayer(gameTime);
+            for(int i = 0; i<blocks.Count; i++)
+            {
+                blocks[i].Update();
+                player.DetectCol(blocks[i]);
+            }
+           
+
             base.Update(gameTime);
         }
+
+
 
         private void UpdatePlayer(GameTime gameTime)
         {
             if (currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                player.Rotation -= 0.1f;
+                player.TurnLeft();
             }
             if (currentKeyboardState.IsKeyDown(Keys.Right))
             {
-                player.Rotation += 0.1f;
+                player.TurnRight();
             }
             if (currentKeyboardState.IsKeyDown(Keys.Up))
             {
-                player.Position.X += player.speedX;
-                player.Position.Y -= player.speedY;
+                player.GoStraight();
             }
             if (currentKeyboardState.IsKeyDown(Keys.Down))
             {
-                player.Position.X -= player.speedX;
-                player.Position.Y += player.speedY;
+                player.GoBack();
             }
-            player.Position.X = MathHelper.Clamp(player.Position.X, 0, GraphicsDevice.Viewport.Width - player.Width);
-            player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, GraphicsDevice.Viewport.Height - player.Height);
+            //player.Position.X = MathHelper.Clamp(player.Position.X, 0, GraphicsDevice.Viewport.Width - player.Width);
+            //player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, GraphicsDevice.Viewport.Height - player.Height);
         }
 
         /// <summary>
@@ -134,15 +139,10 @@ namespace Monodemo
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-            // Start drawing
             spriteBatch.Begin();
-            //Draw the Main Background Texture
-            spriteBatch.Draw(mainBackground, rectBackground, Color.White);
-            // Draw the Player
+            //spriteBatch.Draw(mainBackground, rectBackground, Color.White);
             player.Draw(spriteBatch);
-            // Stop drawing
+            blocks[0].Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
