@@ -80,7 +80,7 @@ namespace Monodemo
             if (playerRec.Intersects(block.blockRec))
             {
                 DetectPixelCol(block);
-                Debug.WriteLine("Rec Collision");
+                //Debug.WriteLine("Rec Collision");
                 
             }
         }
@@ -89,7 +89,7 @@ namespace Monodemo
         {
             Color[] sourceColors = new Color[PlayerTexture.Width * PlayerTexture.Height];
             PlayerTexture.GetData(sourceColors);
-            Color[] targetColors = new Color[block.blockTexture.Width * block.blockTexture.Width];
+            Color[] targetColors = new Color[block.blockTexture.Width * block.blockTexture.Height];
             block.blockTexture.GetData(targetColors);
 
             int left = Math.Max(playerRec.Left, block.blockRec.Left);
@@ -105,7 +105,7 @@ namespace Monodemo
                 {
                     Color sourceColor = sourceColors[(x - playerRec.Left) + (y - playerRec.Top) * Width];
                     Color targetColor = targetColors[(x - block.blockRec.Left) + (y - block.blockRec.Top) * block.Width];
-                    if(sourceColor.A > 0 && targetColor.A > 0)
+                    if(sourceColor.R > 0 && targetColor.R > 0)
                     {
                         Debug.WriteLine("Pixel Collision");
                         Position.X -= velocity.X;
