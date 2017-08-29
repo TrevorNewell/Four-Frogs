@@ -103,3 +103,4 @@ C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debu
 C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\Block7.xnb
 C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\Block8.xnb
 C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\Block9.xnb
+C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\Glow-Frog Floor(Prototype Placement).xnb
