@@ -46,7 +46,7 @@ namespace SpriteSheetRunner
 
             // TODO: use this.Content to load your game content here
 
-           sprite = new AnimatedSprite(Content.Load<Texture2D>("hopSheet"), 1, 1050, 1050);
+           sprite = new AnimatedSprite(Content.Load<Texture2D>("hopSheetTest"), 1, 1050, 1050);
 
            sprite.Position = new Vector2(400, 300);
         }

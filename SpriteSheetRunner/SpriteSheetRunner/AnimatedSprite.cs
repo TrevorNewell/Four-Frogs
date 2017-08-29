@@ -19,6 +19,9 @@ namespace SpriteSheetRunner
         float timer = 0f;
         float interval = 5f;
         int currentFrame = 0;
+
+        // Specifies our artificial end to our spritesheet
+        int end = 14;
         int spriteWidth = 32;
         int spriteHeight = 48;
         int spriteSpeed = 2;
@@ -68,7 +71,7 @@ namespace SpriteSheetRunner
             if (currentKBState.GetPressedKeys().Length == 0)
             {
                 // Currently, frames 0 to 14 are the hop animations for our spritesheet.  If we aren't moving, stop our spritesheet from animating if it is, and display the first frame (which is the static image of the frog, motionless.)
-                if (currentFrame > 0 && currentFrame < 14)
+                if (currentFrame > 0 && currentFrame < 4)
                 {
                     currentFrame = 0;
                 }
@@ -121,7 +124,7 @@ namespace SpriteSheetRunner
                 currentFrame++;
 
                 // If we've reached the end of our spritesheet, reset to the start of the spritesheet.
-                if (currentFrame > 13)
+                if (currentFrame > end-1)
                 {
                     currentFrame = 0;
                 }
@@ -134,7 +137,7 @@ namespace SpriteSheetRunner
             // If we're just barely starting to move set our fram to the last image of our hop cycle
             if (currentKBState != previousKBState)
             {
-                currentFrame = 14;
+                currentFrame = end;
             }
 
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -147,7 +150,7 @@ namespace SpriteSheetRunner
                 // If we've reached the beginning of our spritesheet, reset to the end of the spritesheet.
                 if (currentFrame < 0)
                 {
-                    currentFrame = 13;
+                    currentFrame = end-1;
                 }
                 timer = 0f;
             }
