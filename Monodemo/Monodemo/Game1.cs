@@ -36,7 +36,11 @@ namespace Monodemo
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";           
+            Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = 1000;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 500;   // set this value to the desired height of your window
+            graphics.ApplyChanges();
+
         }
 
         /// <summary>
@@ -72,8 +76,8 @@ namespace Monodemo
                                                  GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
             player.Initialize(Content.Load<Texture2D>("Graphics\\player"), playerPosition);
 
+            //mainBackground = Content.Load<Texture2D>("Graphics\\Glow-Frog Floor(Prototype Placement)");
             mainBackground = Content.Load<Texture2D>("Graphics\\BG");
-
             blocks[0].Initialize(Content.Load<Texture2D>("graphics\\block0"), new Vector2(200f, 200f));
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
@@ -93,11 +97,18 @@ namespace Monodemo
             Enemy e2 = new Enemy();
             Enemy e3 = new Enemy();
             Enemy e4 = new Enemy();
-            Vector2 p1 = new Vector2(600, 100);
-            Vector2 p2 = new Vector2(100, 50);
-            Vector2 p3 = new Vector2(600, 300);
-            Vector2 p4 = new Vector2(100, 10);
-            
+            Enemy e5 = new Enemy();
+            Enemy e6 = new Enemy();
+            Enemy e7 = new Enemy();
+            Vector2 p1 = new Vector2(830, 25);
+            Vector2 p2 = new Vector2(300, 150);
+            Vector2 p3 = new Vector2(910, 270);
+            Vector2 p4 = new Vector2(180, 350);
+            Vector2 p5 = new Vector2(660, 260);
+            Vector2 p6 = new Vector2(415, 0);
+            Vector2 p7 = new Vector2(350, 0);
+
+
 
             e1.Initialize(enemyTexture, p1);
             enemies.Add(e1);
@@ -107,6 +118,12 @@ namespace Monodemo
             enemies.Add(e3);
             e4.Initialize(enemyTexture, p4);
             enemies.Add(e4);
+            e5.Initialize(enemyTexture, p5);
+            enemies.Add(e5);
+            e6.Initialize(enemyTexture, p6);
+            enemies.Add(e6);
+            e7.Initialize(enemyTexture, p7);
+            enemies.Add(e7);
 
 
 
