@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Data;
 using System;
 
 namespace Monodemo
@@ -32,13 +34,16 @@ namespace Monodemo
         private Song gameMusic;
 
         List<Block> blocks;
+        const int NUM_OF_BLOCKS = 20;
+        DataTable blocksTable;
+        CSVUtil csv;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 1000;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 500;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = 1440;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 900;   // set this value to the desired height of your window
             graphics.ApplyChanges();
 
         }
@@ -53,9 +58,16 @@ namespace Monodemo
         {
             player = new Player();
             blocks = new List<Block>();
-            blocks.Add(new Block());
-            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            for(int i = 0; i < NUM_OF_BLOCKS; i++)
+            {
+                blocks.Add(new Block());
+            }    
 
+            blocksTable = new DataTable();
+            csv = new CSVUtil();
+            blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv"); 
+
+            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             
             enemies = new List<Enemy>();
             enemies.Add(new Enemy());
@@ -72,13 +84,18 @@ namespace Monodemo
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + GraphicsDevice.Viewport.TitleSafeArea.Width / 2,
-                                                 GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
-            player.Initialize(Content.Load<Texture2D>("Graphics\\player"), playerPosition);
+            Vector2 playerPosition = new Vector2(50, 100);
+            player.Initialize(Content.Load<Texture2D>("Graphics\\player"), Content.Load<Texture2D>("Graphics\\hopSheet"), playerPosition);
 
             //mainBackground = Content.Load<Texture2D>("Graphics\\Glow-Frog Floor(Prototype Placement)");
             mainBackground = Content.Load<Texture2D>("Graphics\\BG");
-            blocks[0].Initialize(Content.Load<Texture2D>("graphics\\block0"), new Vector2(200f, 200f));
+
+            for(int i = 0; i < blocks.Count; i++)
+            {
+                Vector2 poi = new Vector2(float.Parse(blocksTable.Rows[i+1][1].ToString()), float.Parse(blocksTable.Rows[i+1][2].ToString()));
+                blocks[i].Initialize(Content.Load<Texture2D>("graphics\\block" + Convert.ToString(i+1)), poi);
+            }
+            //blocks[0].Initialize(Content.Load<Texture2D>("graphics\\block0"), new Vector2(200f, 200f));
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
@@ -108,8 +125,6 @@ namespace Monodemo
             Vector2 p6 = new Vector2(415, 0);
             Vector2 p7 = new Vector2(350, 0);
 
-
-
             e1.Initialize(enemyTexture, p1);
             enemies.Add(e1);
             e2.Initialize(enemyTexture, p2);
@@ -124,10 +139,6 @@ namespace Monodemo
             enemies.Add(e6);
             e7.Initialize(enemyTexture, p7);
             enemies.Add(e7);
-
-
-
-
 
             //Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2);
             //ran.Next(100, (GraphicsDevice.Viewport.Height - 100));
@@ -232,6 +243,7 @@ namespace Monodemo
             {
                 player.GoBack();
             }
+            
             //player.Position.X = MathHelper.Clamp(player.Position.X, 0, GraphicsDevice.Viewport.Width - player.Width);
             //player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, GraphicsDevice.Viewport.Height - player.Height);
         }
@@ -247,7 +259,10 @@ namespace Monodemo
             spriteBatch.Draw(mainBackground, rectBackground, Color.White);
             //spriteBatch.Draw(mainBackground, new Rectangle(0, 0, 800, 480), Color.White);
             player.Draw(spriteBatch);
-            blocks[0].Draw(spriteBatch);
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                blocks[i].Draw(spriteBatch);
+            }
 
             for (int i = 0; i < enemies.Count; i++)
                 { 
