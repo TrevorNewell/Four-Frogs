@@ -28,6 +28,21 @@ namespace Monodemo
         Texture2D enemyTexture;
         TimeSpan enemySpawnTime;
         TimeSpan previousSpawnTime;
+        enum AiState
+        {
+            Chasing,
+
+            Wander
+        }
+        Vector2 enemyPosition;
+        float orientation = 0;
+        Vector2 enemyTextureCenter;
+        float enemyChaseDistance = 250.0f;
+        float enemyHysteresis = 15.0f;
+        float maxEnemySpeed = 5.0f;
+        float enemySpeed = 2.0f;
+        Vector2 wanderDirection;
+        Random ran = new Random();
 
         private Song gameMusic;
 
@@ -56,11 +71,12 @@ namespace Monodemo
             blocks.Add(new Block());
             rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
-            
+            Viewport vp = graphics.GraphicsDevice.Viewport;
             enemies = new List<Enemy>();
             enemies.Add(new Enemy());
             previousSpawnTime = TimeSpan.Zero;
             enemySpawnTime = TimeSpan.FromSeconds(1.0f);
+            enemyPosition = new Vector2(vp.Width / 4, vp.Height / 2);
             base.Initialize();
         }
 
@@ -88,6 +104,7 @@ namespace Monodemo
             {
                 enemies[i].Initialize(enemyTexture, Vector2.Zero);
             }
+            enemyTextureCenter = new Vector2(enemyTexture.Width / 2, enemyTexture.Height / 2);
             // TODO: use this.Content to load your game content here
         }
 
@@ -140,16 +157,18 @@ namespace Monodemo
 
         private void UpdateEnemies(GameTime gameTime)
         {
-            if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
-            {
-                previousSpawnTime = gameTime.TotalGameTime;
 
-                AddEnemy();
 
-            }
+            //if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+            //{
+               // previousSpawnTime = gameTime.TotalGameTime;
+
+               AddEnemy();
+
+            //}
 
             for (int i = enemies.Count - 1; i >= 0; i--)
-             {
+            {
 
                 enemies[i].Update(gameTime);
 
@@ -163,9 +182,109 @@ namespace Monodemo
 
             }
 
+            
+            
+            AiState enemyState = AiState.Wander;
+            float enemyChaseThreshold = enemyChaseDistance;
+            Enemy e = new Enemy();
+            
+    
+            for (int i = enemies.Count - 1; i >= 0; i--)
+            {
+                e = enemies[i];
+                enemyPosition = e.Position;                
+                
+
+                if (enemyState == AiState.Wander)
+                {
+                    enemyChaseThreshold -= enemyHysteresis / 2;
+                }
+                else if(enemyState == AiState.Chasing)
+                {
+                    enemyChaseThreshold += enemyHysteresis / 2;
+                }
+
+                if (enemyState == AiState.Wander)
+                {
+
+                    Wander(enemyPosition, ref wanderDirection, ref orientation,
+                        e.enemyTurnSpeed);
+                    enemySpeed = .25f * maxEnemySpeed;
+
+                }
+                else if(enemyState == AiState.Chasing)
+                {
+                    orientation = TurnToFace(enemyPosition, player.Position, orientation, e.enemyTurnSpeed);
+                }
+                Vector2 heading = new Vector2(
+                    (float)Math.Cos(orientation), (float)Math.Sin(orientation));
+                enemyPosition += heading * enemySpeed;
+
+            }
         }
 
+            private void Wander(Vector2 position, ref Vector2 wanderDirection, ref float orientation, float turnSpeed)
+            {
+                wanderDirection.X += MathHelper.Lerp(-.25f, .25f, (float)ran.NextDouble());
+                wanderDirection.Y += MathHelper.Lerp(-.25f, .25f, (float)ran.NextDouble());
 
+                if (wanderDirection != Vector2.Zero)
+                {
+                 wanderDirection.Normalize();
+                }
+
+                orientation = TurnToFace(position, position + wanderDirection, orientation, .15f * turnSpeed);
+                Vector2 screenCenter = Vector2.Zero;
+                screenCenter.X = graphics.GraphicsDevice.Viewport.Width / 2;
+                screenCenter.Y = graphics.GraphicsDevice.Viewport.Width / 2;
+
+                float distanceFromScreenCenter = Vector2.Distance(screenCenter, position);
+                float MaxDistanceFromScreenCenter = Math.Min(screenCenter.Y, screenCenter.X);
+                float normalizedDistance = distanceFromScreenCenter / MaxDistanceFromScreenCenter;
+                float turnToCenterSpeed = .3f * normalizedDistance * normalizedDistance * turnSpeed;
+
+                orientation = TurnToFace(position, screenCenter, orientation, turnToCenterSpeed);
+            }
+
+
+            private static float TurnToFace(Vector2 position, Vector2 faceThis, float currentAngle, float turnSpeed)
+            {
+
+                float x = faceThis.X - position.X;
+                float y = faceThis.Y - position.Y;
+
+
+                float desiredAngle = (float)Math.Atan2(y, x);
+
+
+                float difference = WrapAngle(desiredAngle - currentAngle);
+
+
+                difference = MathHelper.Clamp(difference, -turnSpeed, turnSpeed);
+
+                return WrapAngle(currentAngle + difference);
+            }
+
+            private static float WrapAngle(float radians)
+            {
+                while (radians < -MathHelper.Pi)
+                {
+                    radians += MathHelper.TwoPi;
+                }
+                while (radians > MathHelper.Pi)
+                {
+                    radians -= MathHelper.TwoPi;
+                }
+                return radians;
+            }
+
+            private Vector2 ClampToViewport(Vector2 vector)
+            {
+                Viewport vp = graphics.GraphicsDevice.Viewport;
+                vector.X = MathHelper.Clamp(vector.X, vp.X, vp.X + vp.Width);
+                vector.Y = MathHelper.Clamp(vector.Y, vp.Y, vp.Y + vp.Height);
+                return vector;
+            }
 
 
 
@@ -203,11 +322,23 @@ namespace Monodemo
             {
                 blocks[i].Update();
                 player.DetectCol(blocks[i]);
+                enemies[i].DetectCol(blocks[i]);
+            }
+            
+            for(int i = 0; i <enemies.Count; i++)
+            {
+                enemies[i].DetectColPlayer(player);
             }
            
             //Update the enemies
-            UpdateEnemies(gameTime);
 
+            for(int i = enemies.Count-1; i>=0; i--)
+            { 
+                enemy = enemies[i];
+                enemy.Update(gameTime);
+            }
+            UpdateEnemies(gameTime);
+            enemyPosition = ClampToViewport(enemyPosition);
 
             base.Update(gameTime);
         }
@@ -249,8 +380,9 @@ namespace Monodemo
             player.Draw(spriteBatch);
             blocks[0].Draw(spriteBatch);
 
+            
             for (int i = 0; i < enemies.Count; i++)
-                { 
+                {
                     enemies[i].Draw(spriteBatch);
                 }
 
