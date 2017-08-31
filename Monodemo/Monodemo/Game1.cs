@@ -30,6 +30,10 @@ namespace Monodemo
         Texture2D enemyTexture;
         TimeSpan enemySpawnTime;
         TimeSpan previousSpawnTime;
+        DataTable enemiesTable;
+        const int NUM_OF_ENE = 7;
+
+        Camera camera;
 
         private Song gameMusic;
 
@@ -42,8 +46,8 @@ namespace Monodemo
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 1440;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 900;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = 720;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 450;   // set this value to the desired height of your window
             graphics.ApplyChanges();
 
         }
@@ -62,7 +66,6 @@ namespace Monodemo
             {
                 blocks.Add(new Block());
             }    
-
             blocksTable = new DataTable();
             csv = new CSVUtil();
             blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv"); 
@@ -70,9 +73,12 @@ namespace Monodemo
             rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             
             enemies = new List<Enemy>();
-            enemies.Add(new Enemy());
             previousSpawnTime = TimeSpan.Zero;
             enemySpawnTime = TimeSpan.FromSeconds(1.0f);
+            enemiesTable = csv.ReadCSV("Content\\Data\\enePoi.csv");
+
+            camera = new Camera(GraphicsDevice.Viewport);
+
             base.Initialize();
         }
 
@@ -110,20 +116,20 @@ namespace Monodemo
 
         private void AddEnemy()
         {
-            Enemy e1 = new Enemy();
+            /*Enemy e1 = new Enemy();
             Enemy e2 = new Enemy();
             Enemy e3 = new Enemy();
             Enemy e4 = new Enemy();
             Enemy e5 = new Enemy();
             Enemy e6 = new Enemy();
             Enemy e7 = new Enemy();
-            Vector2 p1 = new Vector2(830, 25);
-            Vector2 p2 = new Vector2(300, 150);
-            Vector2 p3 = new Vector2(910, 270);
-            Vector2 p4 = new Vector2(180, 350);
-            Vector2 p5 = new Vector2(660, 260);
-            Vector2 p6 = new Vector2(415, 0);
-            Vector2 p7 = new Vector2(350, 0);
+            Vector2 p1 = new Vector2(float.Parse(enemiesTable.Rows[2][1].ToString()), float.Parse(enemiesTable.Rows[2][2].ToString()));
+            Vector2 p2 = new Vector2(float.Parse(enemiesTable.Rows[3][1].ToString()), float.Parse(enemiesTable.Rows[3][2].ToString()));
+            Vector2 p3 = new Vector2(float.Parse(enemiesTable.Rows[4][1].ToString()), float.Parse(enemiesTable.Rows[4][2].ToString()));
+            Vector2 p4 = new Vector2(float.Parse(enemiesTable.Rows[5][1].ToString()), float.Parse(enemiesTable.Rows[5][2].ToString()));
+            Vector2 p5 = new Vector2(float.Parse(enemiesTable.Rows[6][1].ToString()), float.Parse(enemiesTable.Rows[6][2].ToString()));
+            Vector2 p6 = new Vector2(float.Parse(enemiesTable.Rows[7][1].ToString()), float.Parse(enemiesTable.Rows[7][2].ToString()));
+            Vector2 p7 = new Vector2(float.Parse(enemiesTable.Rows[8][1].ToString()), float.Parse(enemiesTable.Rows[8][2].ToString()));
 
             e1.Initialize(enemyTexture, p1);
             enemies.Add(e1);
@@ -138,7 +144,15 @@ namespace Monodemo
             e6.Initialize(enemyTexture, p6);
             enemies.Add(e6);
             e7.Initialize(enemyTexture, p7);
-            enemies.Add(e7);
+            enemies.Add(e7);*/
+
+            for(int i = 0; i < NUM_OF_ENE; i++)
+            {
+                Enemy enemy = new Enemy();
+                Vector2 poi = new Vector2(float.Parse(enemiesTable.Rows[i + 1][1].ToString()), float.Parse(enemiesTable.Rows[i + 1][2].ToString()));
+                enemy.Initialize(enemyTexture, poi);
+                enemies.Add(enemy);
+            }
 
             //Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2);
             //ran.Next(100, (GraphicsDevice.Viewport.Height - 100));
@@ -208,18 +222,23 @@ namespace Monodemo
             currentGamePadState = GamePad.GetState(PlayerIndex.One);
 
             //Update the player            
-            player.Update();
-            UpdatePlayer(gameTime);
-            for(int i = 0; i<blocks.Count; i++)
+            player.Update(gameTime);
+            for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].Update();
                 player.DetectCol(blocks[i]);
             }
+            UpdatePlayer(gameTime);
+            
            
             //Update the enemies
             UpdateEnemies(gameTime);
 
-
+            camera.Update(player.Position);
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+                camera.zoom += 0.1f;
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+                camera.zoom -= 0.1f;
             base.Update(gameTime);
         }
 
@@ -235,7 +254,7 @@ namespace Monodemo
             {
                 player.TurnRight();
             }
-            if (currentKeyboardState.IsKeyDown(Keys.Up))
+            if (currentKeyboardState.IsKeyDown(Keys.Up) && (!player.isCol))
             {
                 player.GoStraight();
             }
@@ -255,7 +274,7 @@ namespace Monodemo
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null,camera.transform);
             spriteBatch.Draw(mainBackground, rectBackground, Color.White);
             //spriteBatch.Draw(mainBackground, new Rectangle(0, 0, 800, 480), Color.White);
             player.Draw(spriteBatch);
