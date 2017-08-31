@@ -155,6 +155,9 @@ C:\Users\KDD\Source\Repos\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.cs
 C:\Users\KDD\Source\Repos\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.csproj.CoreCompileInputs.cache
 C:\Users\KDD\Source\Repos\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.exe
 C:\Users\KDD\Source\Repos\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.pdb
+=======
+C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.exe
+C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.pdb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\bg.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\block0.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\Block1.xnb
@@ -203,5 +206,4 @@ C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\SharpDX.Direct2D1.x
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.csprojResolveAssemblyReference.cache
-C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.exe
-C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.pdb
+C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\hopSheet.xnb

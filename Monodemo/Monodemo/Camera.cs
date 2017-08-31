@@ -28,7 +28,7 @@ namespace Monodemo
             //restrict camera moving range, make sure it won't move out of border
             if (center.X - viewport.Width / 6 < 0)//zoom = 3
                 center.X = viewport.Width / 6;
-            else if (center.X + viewport.Width > 1440)
+            else if (center.X + viewport.Width / 6 > 1440)
                 center.X = 1440 - viewport.Width / 6;
             if (center.Y - viewport.Height / 6 < 0)
                 center.Y = viewport.Height / 6;
