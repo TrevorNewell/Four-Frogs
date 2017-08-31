@@ -46,6 +46,7 @@ namespace Monodemo
         float maxEnemySpeed = 5.0f;
         float enemySpeed = 2.0f;
         Vector2 wanderDirection;
+        Enemy enemy = new Enemy();
         Random ran = new Random();
 
         private Song gameMusic;
@@ -57,7 +58,6 @@ namespace Monodemo
 
         Camera camera;
 
-        private Song gameMusic;
 
         public Game1()
         {
