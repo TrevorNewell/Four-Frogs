@@ -70,7 +70,7 @@ namespace Monodemo
             csv = new CSVUtil();
             blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv"); 
 
-            rectBackground = new Rectangle(0, 0, 1440, 900);
+            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
             
             enemies = new List<Enemy>();
             previousSpawnTime = TimeSpan.Zero;
