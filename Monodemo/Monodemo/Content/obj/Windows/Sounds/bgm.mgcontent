@@ -3,7 +3,7 @@
   <SourceFile>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.mp3</SourceFile>
   <SourceTime>2017-08-29T09:47:18.8076811-06:00</SourceTime>
   <DestFile>C:/github/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Sounds/bgm.xnb</DestFile>
-  <DestTime>2017-08-30T13:45:52.4565921-06:00</DestTime>
+  <DestTime>2017-08-31T09:25:50.0984097-06:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2017-03-01T08:05:36-07:00</ImporterTime>
   <Processor>SongProcessor</Processor>

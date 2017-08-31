@@ -76,16 +76,18 @@ namespace Monodemo
 
         {
             spriteBatch.Draw(AnimeTexture, Position, animeRec, Color.White, rotation, center, 1f, SpriteEffects.None, 0f);
-        }   
-        
+        }
+
+
+        #region movement
         public void TurnLeft()
         {
-            rotation -= 0.1f;
+            rotation -= 0.05f;
         }    
 
         public void TurnRight()
         {
-            rotation += 0.1f;
+            rotation += 0.05f;
         }
 
         public void GoStraight()
@@ -99,7 +101,10 @@ namespace Monodemo
             Position.X -= velocity.X;
             Position.Y += velocity.Y;
         }
+        #endregion
 
+
+        #region animation
         public void AnimateHop(GameTime gameTime)
         {
             // If we're just barely starting to move set our fram to the first image of our hop cycle
@@ -147,7 +152,10 @@ namespace Monodemo
                 timer = 0f;
             }
         }
+        #endregion
 
+
+        #region collision detection
         public void DetectCol(Block block)
         {            
             if (playerRec.Intersects(block.blockRec))
@@ -201,5 +209,6 @@ namespace Monodemo
             }
             return isCol;
         }
+        #endregion
     }
 }

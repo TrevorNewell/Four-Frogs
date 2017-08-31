@@ -14,16 +14,17 @@ namespace Monodemo
 
         public DataTable ReadCSV(string fileName)
         {
+            //read csv data to datatable
             DataTable dataTable = new DataTable();
             string lineString = string.Empty;
             FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             StreamReader streamReader = new StreamReader(fileStream, Encoding.Default);
             const int NUM_OF_COLS = 5;
-            string[] unitsInLine = new string[NUM_OF_COLS];
+            string[] unitsInLine = new string[NUM_OF_COLS];//number of columns
             int columnCount = 0;
             bool isFirstLine = true;
 
-            while ((lineString = streamReader.ReadLine()) != null)
+            while ((lineString = streamReader.ReadLine()) != null)//read a line
             {
                 unitsInLine = lineString.Split(',');
                 if (isFirstLine == true)
