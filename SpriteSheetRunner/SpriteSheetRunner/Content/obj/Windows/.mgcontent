@@ -4,8 +4,8 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/u0774750/Documents/GitHub/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/hop.png</File>
-    <File>C:/Users/u0774750/Documents/GitHub/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/hopSheet.png</File>
-    <File>C:/Users/u0774750/Documents/GitHub/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/hopSheetTest.png</File>
+    <File>C:/github/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/hop.png</File>
+    <File>C:/github/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/hopSheet.png</File>
+    <File>C:/github/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/hopSheetTest.png</File>
   </SourceFiles>
 </SourceFileCollection>
