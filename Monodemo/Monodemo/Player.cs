@@ -54,8 +54,16 @@ namespace Monodemo
         {
             velocity.X = (float)Math.Sin(rotation) * speed;
             velocity.Y = (float)Math.Cos(rotation) * speed;
-            nextPoi.X = Position.X + velocity.X;
-            nextPoi.Y = Position.Y + velocity.Y;
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                nextPoi.X = Position.X + velocity.X * 3f;
+                nextPoi.Y = Position.Y - velocity.Y * 3f;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                nextPoi.X = Position.X - velocity.X * 3f;
+                nextPoi.Y = Position.Y + velocity.Y * 3f;
+            }
             playerRec.X = (int)nextPoi.X - Width/2;
             playerRec.Y = (int)nextPoi.Y - Height/2;
             UpdateAnime(gameTime);        
@@ -80,23 +88,24 @@ namespace Monodemo
 
 
         #region movement
-        public void TurnLeft()
+        public void TurnLeft(GameTime gameTime)
         {
             rotation -= 0.05f;
         }    
 
-        public void TurnRight()
+        public void TurnRight(GameTime gameTime)
         {
             rotation += 0.05f;
         }
 
-        public void GoStraight()
+        public void GoStraight(GameTime gameTime)
         {
             Position.X += velocity.X;
             Position.Y -= velocity.Y;
+            AnimateHop(gameTime);
         }
 
-        public void GoBack()
+        public void GoBack(GameTime gameTime)
         {
             Position.X -= velocity.X;
             Position.Y += velocity.Y;

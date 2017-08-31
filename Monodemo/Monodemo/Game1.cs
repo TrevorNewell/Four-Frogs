@@ -238,21 +238,36 @@ namespace Monodemo
 
         private void UpdatePlayer(GameTime gameTime)
         {
+
             if (currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                player.TurnLeft();
+                player.TurnLeft(gameTime);
             }
             if (currentKeyboardState.IsKeyDown(Keys.Right))
             {
-                player.TurnRight();
+                player.TurnRight(gameTime);
             }
             if (currentKeyboardState.IsKeyDown(Keys.Up) && (!player.isCol))
             {
-                player.GoStraight();
+                player.GoStraight(gameTime);
             }
-            if (currentKeyboardState.IsKeyDown(Keys.Down))
+            if (currentKeyboardState.IsKeyDown(Keys.Down) && (!player.isCol))
             {
-                player.GoBack();
+                player.GoBack(gameTime);
+            }
+
+            if(Math.Abs(currentGamePadState.ThumbSticks.Left.X)>0.5f || Math.Abs(currentGamePadState.ThumbSticks.Left.Y) > 0.5f)
+            {
+                double X = currentGamePadState.ThumbSticks.Left.X;
+                double Y = currentGamePadState.ThumbSticks.Left.Y;
+                Debug.WriteLine(Y.ToString());
+                double R = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
+
+                
+                player.rotation = (float)Math.Acos(Y/R);
+                Debug.WriteLine(player.rotation.ToString());
+                player.speed = (float)((X / Math.Sin(player.rotation))*(Y / Math.Abs(Y)));
+                //player.GoStraight(gameTime);
             }
             
             //detect the collision with border
