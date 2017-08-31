@@ -14,6 +14,8 @@ namespace Monodemo
 
             public Vector2 Position;
 
+            public Vector2 Center;
+
             public bool Active;
 
             public int Health;
@@ -57,6 +59,7 @@ namespace Monodemo
             // Set the position of the enemy
 
                 Position = position;
+                Center = new Vector2(Width / 2, Height / 2);
 
 
                 Active = true;

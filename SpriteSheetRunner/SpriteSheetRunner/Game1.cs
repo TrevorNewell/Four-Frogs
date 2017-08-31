@@ -46,7 +46,7 @@ namespace SpriteSheetRunner
 
             // TODO: use this.Content to load your game content here
 
-           sprite = new AnimatedSprite(Content.Load<Texture2D>("hopSheetTest"), 1, 1050, 1050);
+           sprite = new AnimatedSprite(Content.Load<Texture2D>("hopSheetTest"), 1, 32, 32);
 
            sprite.Position = new Vector2(400, 300);
         }
@@ -86,7 +86,7 @@ namespace SpriteSheetRunner
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            spriteBatch.Draw(sprite.Texture, sprite.Position, sprite.SourceRect, Color.White, 0f, sprite.Origin, 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite.Texture, sprite.Position, sprite.SourceRect, Color.White, 0f, sprite.Origin, 1f, SpriteEffects.None, 0);
             spriteBatch.End();
 
             base.Draw(gameTime);
