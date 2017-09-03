@@ -18,8 +18,10 @@ namespace Monodemo
         public Vector2 center;
         public bool Active;
         public bool isCol = false;
+        public float maxSpeed;
         public float speed;
         public Vector2 velocity;
+        public Vector2 maxVelocity;
         public float rotation;
         public int Width
         { get { return PlayerTexture.Width; } }
@@ -38,7 +40,12 @@ namespace Monodemo
 
         public void Initialize(Texture2D texture, Texture2D animeTexture, Vector2 position)
         {
+            maxSpeed = 1;
+            maxVelocity.X = (float)Math.Sin(rotation) * maxSpeed;
+            maxVelocity.Y = (float)Math.Cos(rotation) * maxSpeed;
             speed = 1;
+            velocity.X = (float)Math.Sin(rotation) * speed;
+            velocity.Y = (float)Math.Cos(rotation) * speed;
             rotation = 0;
             PlayerTexture = texture;
             AnimeTexture = animeTexture;
@@ -54,6 +61,8 @@ namespace Monodemo
         {
             velocity.X = (float)Math.Sin(rotation) * speed;
             velocity.Y = (float)Math.Cos(rotation) * speed;
+            maxVelocity.X = (float)Math.Sin(rotation) * maxSpeed;
+            maxVelocity.Y = (float)Math.Cos(rotation) * maxSpeed;
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
             {
                 nextPoi.X = Position.X + velocity.X * 3f;
@@ -64,6 +73,9 @@ namespace Monodemo
                 nextPoi.X = Position.X - velocity.X * 3f;
                 nextPoi.Y = Position.Y + velocity.Y * 3f;
             }
+            nextPoi.X = Position.X + maxVelocity.X * 10f;
+            nextPoi.Y = Position.Y - maxVelocity.Y * 10f;
+
             playerRec.X = (int)nextPoi.X - Width/2;
             playerRec.Y = (int)nextPoi.Y - Height/2;
             UpdateAnime(gameTime);        
@@ -198,16 +210,7 @@ namespace Monodemo
                     if (sourceColor.A > 0 && targetColor.A > 0)
                     {
                         Debug.WriteLine("Pixel Collision");
-                        if (currentKBState.IsKeyDown(Keys.Up))
-                        {
-                            //Position.X -= velocity.X;
-                            //Position.Y += velocity.Y;
-                        }
-                        if (currentKBState.IsKeyDown(Keys.Down))
-                        {
-                            //Position.X += velocity.X;
-                            //Position.Y -= velocity.Y;
-                        }
+
                         isCol = true;
                         break;
                     }

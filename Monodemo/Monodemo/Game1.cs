@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data;
@@ -40,7 +41,11 @@ namespace Monodemo
 
         Camera camera;
 
-        private Song gameMusic;
+        public Song gameMusic;
+        public SoundEffect meetEnemy;
+        public SoundEffectInstance meetEnemyInstance;
+        public SoundEffect goldenBall;
+        public SoundEffectInstance goldenBallInstance;
 
         public Game1()
         {
@@ -103,6 +108,10 @@ namespace Monodemo
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
+            meetEnemy = Content.Load<SoundEffect>("Sounds\\meetEnemy");
+            meetEnemyInstance = meetEnemy.CreateInstance();
+            goldenBall = Content.Load<SoundEffect>("Sounds\\goldenBall");
+            goldenBallInstance = goldenBall.CreateInstance();
 
             enemyTexture = Content.Load<Texture2D>("graphics\\Dustbunny01");
             for (int i = 0; i < enemies.Count; i++)
@@ -256,18 +265,22 @@ namespace Monodemo
                 player.GoBack(gameTime);
             }
 
-            if(Math.Abs(currentGamePadState.ThumbSticks.Left.X)>0.5f || Math.Abs(currentGamePadState.ThumbSticks.Left.Y) > 0.5f)
+            //controller
+            if(Math.Abs(currentGamePadState.ThumbSticks.Left.X)>0.2f || Math.Abs(currentGamePadState.ThumbSticks.Left.Y) > 0.2f)
             {
                 double X = currentGamePadState.ThumbSticks.Left.X;
                 double Y = currentGamePadState.ThumbSticks.Left.Y;
-                Debug.WriteLine(Y.ToString());
-                double R = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));
-
-                
+                double R = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));                
                 player.rotation = (float)Math.Acos(Y/R);
-                Debug.WriteLine(player.rotation.ToString());
-                player.speed = (float)((X / Math.Sin(player.rotation))*(Y / Math.Abs(Y)));
-                //player.GoStraight(gameTime);
+                if(X < 0)
+                {
+                    player.rotation = -player.rotation;
+                }
+
+                if (!player.isCol)
+                {
+                    player.GoStraight(gameTime);
+                }                
             }
             
             //detect the collision with border

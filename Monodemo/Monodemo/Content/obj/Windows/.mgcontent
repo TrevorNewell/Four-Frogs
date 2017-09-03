@@ -32,5 +32,7 @@
     <File>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Graphics/BG.png</File>
     <File>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Glow-Frog Floor(Prototype Placement).jpg</File>
     <File>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Graphics/hopSheet.png</File>
+    <File>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Sounds/goldenball.mp3</File>
+    <File>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Sounds/meetEnemy.mp3</File>
   </SourceFiles>
 </SourceFileCollection>
