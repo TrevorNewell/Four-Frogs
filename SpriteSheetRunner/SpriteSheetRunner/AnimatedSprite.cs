@@ -105,7 +105,7 @@ namespace SpriteSheetRunner
                 }
             }
 
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            //origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
         }
 
         public void AnimateHop(GameTime gameTime)

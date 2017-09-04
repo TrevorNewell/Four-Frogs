@@ -331,3 +331,27 @@
 /processorParam:TextureFormat=Color
 /build:Graphics/Glow-Frog Floor(Prototype Placement).jpg
 
+#begin Graphics/hopSheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Graphics/hopSheet.png
+
+#begin Sounds/goldenball.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/goldenball.mp3
+
+#begin Sounds/meetEnemy.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/meetEnemy.mp3
+

@@ -4,32 +4,33 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/bg.jpg</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.mp3</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/player.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Dustbunny01.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/block0.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block1.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block2.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block3.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block4.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block5.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block6.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block7.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block8.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block9.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block10.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block11.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block12.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block13.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block14.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block15.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block16.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block17.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block18.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block19.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block20.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/BG.png</File>
-    <File>C:/Users/KDD/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Glow-Frog Floor(Prototype Placement).jpg</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/bg.jpg</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.mp3</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/player.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Dustbunny01.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/block0.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block1.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block2.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block3.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block4.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block5.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block6.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block7.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block8.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block9.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block10.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block11.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block12.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block13.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block14.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block15.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block16.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block17.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block18.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block19.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block20.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/BG.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Glow-Frog Floor(Prototype Placement).jpg</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/hopSheet.png</File>
   </SourceFiles>
 </SourceFileCollection>
