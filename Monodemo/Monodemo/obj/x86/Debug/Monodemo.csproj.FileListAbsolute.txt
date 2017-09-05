@@ -297,3 +297,5 @@ C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\
 C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.csprojResolveAssemblyReference.cache
 C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.exe
 C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.pdb
+C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\lighteffect.xnb
+C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\sampleLightMask.xnb

@@ -97,9 +97,9 @@ namespace Monodemo
         /// </summary>
         protected override void Initialize()
         {
-            maxScale = 10;
-            minScale = 1;
-            rate = 0.01f;
+            maxScale = 1;
+            minScale = 0.3f;
+            rate = 0.0001f;
 
             scale = maxScale;
             player = new Player();
@@ -397,11 +397,11 @@ namespace Monodemo
             // Create a Light Mask to pass to the pixel shader
             GraphicsDevice.SetRenderTarget(lightsTarget);
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null, camera.transform);
 
             // This is our light.
             //spriteBatch.Draw(lightMask, new Vector2(player.Position.X - ((lightMask.Bounds.Width) * scale), player.Position.Y - ((lightMask.Bounds.Height) * scale)), null, Color.White, 0, new Vector2((lightMask.Bounds.Width/2)*scale, (lightMask.Bounds.Height/2))*scale, scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(lightMask, new Vector2(mouseX - ((lightMask.Bounds.Width / 2) * scale), mouseY - ((lightMask.Bounds.Height / 2) * scale)), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(lightMask, new Vector2(player.Position.X - ((lightMask.Bounds.Width / 2) * scale), player.Position.Y - ((lightMask.Bounds.Height / 2) * scale)), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
             spriteBatch.End();
 
@@ -438,7 +438,7 @@ namespace Monodemo
             spriteBatch.End();
 
             // UI
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
 
             currentGUI.Draw(spriteBatch, camera.center);
             if (gameStarted == true)
