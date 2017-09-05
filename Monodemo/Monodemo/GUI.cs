@@ -60,9 +60,9 @@ namespace Monodemo
             GUIRectangle = new Rectangle(0, 0, GUITexture.Width, GUITexture.Height);
         }
 
-        public void Draw(SpriteBatch sprite, Vector2 cameraPosition)
+        public void Draw(SpriteBatch sprite)
         {
-             sprite.Draw(GUITexture, cameraPosition + offset, GUIRectangle, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
+             sprite.Draw(GUITexture, position, GUIRectangle, Color.White, rotation, origin, scale, SpriteEffects.None, 0f);
         }
     }
 }

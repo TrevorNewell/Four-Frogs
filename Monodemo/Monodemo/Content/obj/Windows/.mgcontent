@@ -32,7 +32,6 @@
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/collisionSound.wav</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/goldenball.wav</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/meetEnemy.wav</File>
-    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/healthBarBorder.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI0.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI1.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI2.png</File>
@@ -40,6 +39,6 @@
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI4.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.MP3</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/healthBar.png</File>
-    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/text/Times New Roman.spritefont</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/healthBarBorder.png</File>
   </SourceFiles>
 </SourceFileCollection>

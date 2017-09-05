@@ -69,8 +69,8 @@ namespace Monodemo
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 720;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 450;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = 1440;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 900;   // set this value to the desired height of your window
             graphics.ApplyChanges();
         }
 
@@ -161,7 +161,7 @@ namespace Monodemo
             healthBar.GUIRectangle = new Rectangle(0, 0, 200, 20);
             healthBarBorders.LoadContent(Content.Load<Texture2D>("graphics\\healthBarBorder"));
 
-            timeFont = Content.Load<SpriteFont>("text\\Times New Roman");
+            //timeFont = Content.Load<SpriteFont>("text\\Times New Roman");
             textPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
         }
 
@@ -283,9 +283,9 @@ namespace Monodemo
             //zoom
             camera.Update(player.Position);
             if (Keyboard.GetState().IsKeyDown(Keys.W))
-                camera.zoom += 0.1f;
+                 camera.zoom += 0.1f;
             if (Keyboard.GetState().IsKeyDown(Keys.S))
-                camera.zoom -= 0.1f;
+               camera.zoom -= 0.1f;
 
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             tcounter -= (int)timer;
@@ -365,7 +365,7 @@ namespace Monodemo
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null,camera.transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null);
             spriteBatch.Draw(mainBackground, rectBackground, Color.White);
             player.Draw(spriteBatch);
             
@@ -379,9 +379,9 @@ namespace Monodemo
                 enemies[i].Draw(spriteBatch);
             }
 
-            currentGUI.Draw(spriteBatch, camera.center);
-            healthBar.Draw(spriteBatch, camera.center);
-            healthBarBorders.Draw(spriteBatch, camera.center);
+            //currentGUI.Draw(spriteBatch, camera.center);
+            healthBar.Draw(spriteBatch);
+            healthBarBorders.Draw(spriteBatch);
             string time = "Timer: " + tcounter.ToString();
             //Vector2 origin = timeFont.MeasureString(time);
             //spriteBatch.DrawString(timeFont, time, textPos, Color.AliceBlue, 0, origin, 1.0f, SpriteEffects.None, 0.5f);

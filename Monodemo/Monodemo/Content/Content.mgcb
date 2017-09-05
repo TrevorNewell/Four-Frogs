@@ -331,18 +331,6 @@
 /processorParam:Quality=Best
 /build:Sounds/meetEnemy.wav
 
-#begin Graphics/healthBarBorder.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Graphics/healthBarBorder.png
-
 #begin Graphics/GUI0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -421,10 +409,15 @@
 /processorParam:TextureFormat=Color
 /build:Graphics/healthBar.png
 
-#begin text/Times New Roman.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
+#begin Graphics/healthBarBorder.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
 /processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:text/Times New Roman.spritefont
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Graphics/healthBarBorder.png
 
