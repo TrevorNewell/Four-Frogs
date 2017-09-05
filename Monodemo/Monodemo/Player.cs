@@ -38,6 +38,9 @@ namespace Monodemo
         int currentFrame = 0;
         int end = 14;
 
+        private float health;
+        private const int maxHealth = 100;
+
         public void Initialize(Texture2D texture, Texture2D animeTexture, Vector2 position)
         {
             maxSpeed = 1;
@@ -53,7 +56,10 @@ namespace Monodemo
             nextPoi = position;
             Active = true;
             center = new Vector2(Width / 2, Height / 2);
-            playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);    
+            playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+
+            health = 100f;
+              
         }
 
         public void Update(GameTime gameTime)
@@ -78,7 +84,9 @@ namespace Monodemo
 
             playerRec.X = (int)nextPoi.X - Width/2;
             playerRec.Y = (int)nextPoi.Y - Height/2;
-            UpdateAnime(gameTime);        
+            UpdateAnime(gameTime);    
+            
+                
         }
 
         private void UpdateAnime(GameTime gameTime)
@@ -207,7 +215,7 @@ namespace Monodemo
                 {
                     Color sourceColor = sourceColors[(x - playerRec.Left) + (y - playerRec.Top) * Width];
                     Color targetColor = targetColors[(x - block.blockRec.Left) + (y - block.blockRec.Top) * block.Width];
-                    if (sourceColor.A > 0 && targetColor.A > 0)
+                    if (sourceColor.A > 0 && targetColor.A > 30)
                     {
                         Debug.WriteLine("Pixel Collision");
 
