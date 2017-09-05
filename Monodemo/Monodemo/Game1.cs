@@ -27,6 +27,7 @@ namespace Monodemo
 
         Texture2D mainBackground;
         Rectangle rectBackground;
+        Texture2D dark;
 
         List<Enemy> enemies;
         Texture2D enemyTexture;
@@ -49,11 +50,12 @@ namespace Monodemo
         GUI healthBar;
         Rectangle healthBarRec;
         GUI healthBarBorders;
+       
 
         Camera camera;
 
         float timer;
-        int tcounter = 50;
+        int tcounter = 10;
         SpriteFont timeFont;
         Vector2 textPos;
 
@@ -113,6 +115,7 @@ namespace Monodemo
 
             camera = new Camera(GraphicsDevice.Viewport);
             rectBackground = new Rectangle(0, 0, 1440, 900);
+            
 
             base.Initialize();
         }
@@ -160,6 +163,10 @@ namespace Monodemo
             healthBar.LoadContent(Content.Load<Texture2D>("graphics\\healthBar"));
             healthBar.GUIRectangle = new Rectangle(0, 0, 200, 20);
             healthBarBorders.LoadContent(Content.Load<Texture2D>("graphics\\healthBarBorder"));
+
+            dark = Content.Load<Texture2D>("graphics\\Darkness");
+
+
 
             //timeFont = Content.Load<SpriteFont>("text\\Times New Roman");
             textPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
@@ -288,7 +295,10 @@ namespace Monodemo
                camera.zoom -= 0.1f;
 
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            tcounter -= (int)timer;
+            if (tcounter != 0)
+            {
+                tcounter -= (int)timer;
+            }
             if (timer >= 1.0f) timer = 0f;
 
             updateGUI(gameTime);
@@ -385,6 +395,11 @@ namespace Monodemo
             string time = "Timer: " + tcounter.ToString();
             //Vector2 origin = timeFont.MeasureString(time);
             //spriteBatch.DrawString(timeFont, time, textPos, Color.AliceBlue, 0, origin, 1.0f, SpriteEffects.None, 0.5f);
+
+            if (tcounter == 0)
+            {
+                spriteBatch.Draw(dark, rectBackground, Color.White);
+            }
 
             spriteBatch.End();
 

@@ -242,3 +242,4 @@ C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debu
 C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\collisionSound.xnb
 C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\goldenball.xnb
 C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\meetEnemy.xnb
+C:\Users\u1149097\Source\Repos\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\Darkness.xnb
