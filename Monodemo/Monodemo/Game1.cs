@@ -55,9 +55,13 @@ namespace Monodemo
         const int NUM_OF_BLOCKS = 20;
         DataTable blocksTable;
         CSVUtil csv;
+ 
 
         Camera camera;
-
+        float timer;
+        int tcounter = 50;
+        SpriteFont timeFont;
+        Vector2 textPos;
 
         public Game1()
         {
@@ -133,6 +137,9 @@ namespace Monodemo
             }
             enemyTextureCenter = new Vector2(enemyTexture.Width / 2, enemyTexture.Height / 2);
             // TODO: use this.Content to load your game content here
+
+            timeFont = Content.Load<SpriteFont>("text\\Times New Roman");
+            textPos = new Vector2(graphics.GraphicsDevice.Viewport.Width/2, graphics.GraphicsDevice.Viewport.Height/2);
         }
 
         private void AddEnemy()
@@ -350,7 +357,7 @@ namespace Monodemo
             {
                 blocks[i].Update();
                 player.DetectCol(blocks[i]);
-                enemies[i].DetectCol(blocks[i]);
+               // enemies[i].DetectCol(blocks[i]);
             }
             
             for(int i = 0; i <enemies.Count; i++)
@@ -376,6 +383,10 @@ namespace Monodemo
                 camera.zoom -= 0.1f;
             enemyPosition = ClampToViewport(enemyPosition);
 
+            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            tcounter -= (int)timer;
+            if (timer >= 1.0F) timer = 0F;
+
             base.Update(gameTime);
         }
 
@@ -383,19 +394,19 @@ namespace Monodemo
         {
             if (currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                player.TurnLeft();
+                player.TurnLeft(gameTime);
             }
             if (currentKeyboardState.IsKeyDown(Keys.Right))
             {
-                player.TurnRight();
+                player.TurnRight(gameTime);
             }
             if (currentKeyboardState.IsKeyDown(Keys.Up) && (!player.isCol))
             {
-                player.GoStraight();
+                player.GoStraight(gameTime);
             }
             if (currentKeyboardState.IsKeyDown(Keys.Down))
             {
-                player.GoBack();
+                player.GoBack(gameTime);
             }
             
             //detect the collision with border
@@ -423,6 +434,10 @@ namespace Monodemo
                 {
                     enemies[i].Draw(spriteBatch);
                 }
+            string time = "Timer: " + tcounter.ToString() + " Health: " + player.playerHealth.ToString() + " Glow: " + player.playerGlow.ToString();
+            Vector2 origin = timeFont.MeasureString(time);
+            spriteBatch.DrawString(timeFont, time, textPos, Color.AliceBlue, 0, origin, 1.0f, SpriteEffects.None, 0.5f);
+
 
             spriteBatch.End();
 

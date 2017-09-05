@@ -355,3 +355,10 @@
 /processorParam:Quality=Best
 /build:Sounds/meetEnemy.mp3
 
+#begin Text/Times New Roman.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Text/Times New Roman.spritefont
+

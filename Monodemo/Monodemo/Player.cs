@@ -29,6 +29,9 @@ namespace Monodemo
         { get { return PlayerTexture.Height; } }
         public Rectangle playerRec;
 
+        public int playerHealth;
+        public int playerGlow;
+
         public Texture2D AnimeTexture;
         public Rectangle animeRec;
         KeyboardState currentKBState;
@@ -53,7 +56,9 @@ namespace Monodemo
             nextPoi = position;
             Active = true;
             center = new Vector2(Width / 2, Height / 2);
-            playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);    
+            playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+            playerHealth = 100;
+            playerGlow = 100;
         }
 
         public void Update(GameTime gameTime)
