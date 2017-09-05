@@ -186,6 +186,7 @@ C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GU
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GUI2.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GUI3.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GUI4.xnb
+C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\healthBar.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\healthBarBorder.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\hopSheet.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\player.xnb
@@ -194,6 +195,7 @@ C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GU
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GUI\GUI2.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GUI\GUI3.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\GUI\GUI4.xnb
+C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\bgm.wma
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\bgm.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\collisionSound.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\goldenball.wma
@@ -220,8 +222,7 @@ C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\SharpDX.Direct3D11.
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.csprojResolveAssemblyReference.cache
 C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.exe
 C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.pdb
-C:\github\Four-Frogs\Monodemo\Monodemo\obj\x86\Debug\Monodemo.csprojResolveAssemblyReference.cache
-C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Sounds\bgm.wma
-C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\healthBar.xnb
+C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\goldenball.xnb

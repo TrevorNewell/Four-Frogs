@@ -39,6 +39,7 @@ namespace Monodemo
         const int NUM_OF_BLOCKS = 20;
         DataTable blocksTable;
         CSVUtil csv;
+        Block ball;
 
         List<GUI> GUIs;
         GUI currentGUI;
@@ -59,6 +60,8 @@ namespace Monodemo
         public SoundEffectInstance goldenBallInstance;
         public SoundEffect collisionSound;
         public SoundEffectInstance collisionSoundInstance;
+
+        private bool gameStarted = false;
 
         public Game1()
         {
@@ -86,7 +89,8 @@ namespace Monodemo
             }    
             blocksTable = new DataTable();
             csv = new CSVUtil();
-            blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv"); 
+            blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv");
+            ball = new Block();
             
             enemies = new List<Enemy>();
             previousSpawnTime = TimeSpan.Zero;
@@ -102,9 +106,9 @@ namespace Monodemo
             currentGUI = GUIs[index];
 
             healthBar = new GUI(graphics);
-            healthBar.setOffset(10, 13);
+            healthBar.setOffset(10, -130);
             healthBarBorders = new GUI(graphics); 
-            healthBarBorders.setOffset(10, 10);       
+            healthBarBorders.setOffset(10, -100);       
 
             camera = new Camera(GraphicsDevice.Viewport);
             rectBackground = new Rectangle(0, 0, 1440, 900);
@@ -131,6 +135,8 @@ namespace Monodemo
                 Vector2 poi = new Vector2(float.Parse(blocksTable.Rows[i+1][1].ToString()), float.Parse(blocksTable.Rows[i+1][2].ToString()));
                 blocks[i].Initialize(Content.Load<Texture2D>("graphics\\block" + Convert.ToString(i+1)), poi);
             }
+            ball.Initialize(Content.Load<Texture2D>("graphics\\goldenball"), new Vector2(508f, 847f));
+
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
@@ -323,13 +329,13 @@ namespace Monodemo
             }
             
             //detect the collision with border
-            player.Position.X = MathHelper.Clamp(player.Position.X, 0, graphics.PreferredBackBufferWidth - player.Width);
-            player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, graphics.PreferredBackBufferHeight - player.Height);
+            player.Position.X = MathHelper.Clamp(player.Position.X, 0, 1440 - player.Width);
+            player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, 900 - player.Height);
         }
 
         private void updateGUI(GameTime gameTime)
         {            
-            if (currentKeyboardState.IsKeyDown(Keys.Space) && (!isKeyPressed))
+            if (currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed))
             {
                 isKeyPressed = true;
                 if (index < 4)
@@ -339,10 +345,10 @@ namespace Monodemo
                 }
                 else
                 {
-                    currentGUI.origin = new Vector2(500f, 1000f);
+                    startGame(); 
                 }                
             }
-            if (currentKeyboardState.IsKeyUp(Keys.Space) && (isKeyPressed))
+            if (currentGamePadState.IsButtonUp(Buttons.A) && (isKeyPressed))
                 isKeyPressed = false;
         }
 
@@ -362,18 +368,30 @@ namespace Monodemo
                 blocks[i].Draw(spriteBatch);
             }
 
+            ball.Draw(spriteBatch);
+
             for (int i = 0; i < enemies.Count; i++)
             { 
                 enemies[i].Draw(spriteBatch);
             }
 
             currentGUI.Draw(spriteBatch, camera.center);
+            if (gameStarted == true)
+                healthBar.GUIRectangle.Width = (int)player.health;
             healthBar.Draw(spriteBatch, camera.center);
             healthBarBorders.Draw(spriteBatch, camera.center);
 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void startGame()
+        {
+            currentGUI.origin = new Vector2(500f, 1000f);
+            healthBar.setOffset(10, 13);
+            healthBarBorders.setOffset(10, 10);
+            gameStarted = true;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Monodemo
         int currentFrame = 0;
         int end = 14;
 
-        private float health;
+        public float health;
         private const int maxHealth = 100;
 
         public void Initialize(Texture2D texture, Texture2D animeTexture, Vector2 position)
@@ -58,7 +58,7 @@ namespace Monodemo
             center = new Vector2(Width / 2, Height / 2);
             playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
 
-            health = 100f;
+            health = 195f;
               
         }
 
@@ -84,9 +84,9 @@ namespace Monodemo
 
             playerRec.X = (int)nextPoi.X - Width/2;
             playerRec.Y = (int)nextPoi.Y - Height/2;
-            UpdateAnime(gameTime);    
-            
-                
+            UpdateAnime(gameTime);
+
+            health -= 0.02f;    
         }
 
         private void UpdateAnime(GameTime gameTime)
