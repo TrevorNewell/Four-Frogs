@@ -425,12 +425,6 @@ namespace Monodemo
                 enemies[i].Draw(spriteBatch);
             }
 
-            currentGUI.Draw(spriteBatch, camera.center);
-            if (gameStarted == true)
-                healthBar.GUIRectangle.Width = (int)player.health;
-            healthBar.Draw(spriteBatch, camera.center);
-            healthBarBorders.Draw(spriteBatch, camera.center);
-
             spriteBatch.End();
 
 
@@ -441,6 +435,17 @@ namespace Monodemo
             lightingEffect.Parameters["lightMask"].SetValue(lightsTarget);
             lightingEffect.CurrentTechnique.Passes[0].Apply();
             spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);
+            spriteBatch.End();
+
+            // UI
+            spriteBatch.Begin();
+
+            currentGUI.Draw(spriteBatch, camera.center);
+            if (gameStarted == true)
+                healthBar.GUIRectangle.Width = (int)player.health;
+            healthBar.Draw(spriteBatch, camera.center);
+            healthBarBorders.Draw(spriteBatch, camera.center);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
