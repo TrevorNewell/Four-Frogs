@@ -52,6 +52,11 @@ namespace Monodemo
 
         Camera camera;
 
+        float timer;
+        int tcounter = 50;
+        SpriteFont timeFont;
+        Vector2 textPos;
+
         public Song gameMusic;
         public SoundEffect meetEnemy;
         public SoundEffectInstance meetEnemyInstance;
@@ -155,6 +160,9 @@ namespace Monodemo
             healthBar.LoadContent(Content.Load<Texture2D>("graphics\\healthBar"));
             healthBar.GUIRectangle = new Rectangle(0, 0, 200, 20);
             healthBarBorders.LoadContent(Content.Load<Texture2D>("graphics\\healthBarBorder"));
+
+            timeFont = Content.Load<SpriteFont>("text\\Times New Roman");
+            textPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 2);
         }
 
         private void AddEnemy()
@@ -279,6 +287,10 @@ namespace Monodemo
             if (Keyboard.GetState().IsKeyDown(Keys.S))
                 camera.zoom -= 0.1f;
 
+            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            tcounter -= (int)timer;
+            if (timer >= 1.0f) timer = 0f;
+
             updateGUI(gameTime);
 
             base.Update(gameTime);
@@ -370,6 +382,9 @@ namespace Monodemo
             currentGUI.Draw(spriteBatch, camera.center);
             healthBar.Draw(spriteBatch, camera.center);
             healthBarBorders.Draw(spriteBatch, camera.center);
+            string time = "Timer: " + tcounter.ToString();
+            //Vector2 origin = timeFont.MeasureString(time);
+            //spriteBatch.DrawString(timeFont, time, textPos, Color.AliceBlue, 0, origin, 1.0f, SpriteEffects.None, 0.5f);
 
             spriteBatch.End();
 

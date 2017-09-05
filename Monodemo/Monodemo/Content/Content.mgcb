@@ -421,3 +421,10 @@
 /processorParam:TextureFormat=Color
 /build:Graphics/healthBar.png
 
+#begin text/Times New Roman.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:text/Times New Roman.spritefont
+
