@@ -18,8 +18,10 @@ namespace Monodemo
         public Vector2 center;
         public bool Active;
         public bool isCol = false;
+        public float maxSpeed;
         public float speed;
         public Vector2 velocity;
+        public Vector2 maxVelocity;
         public float rotation;
         public int Width
         { get { return PlayerTexture.Width; } }
@@ -36,9 +38,17 @@ namespace Monodemo
         int currentFrame = 0;
         int end = 14;
 
+        private float health;
+        private const int maxHealth = 100;
+
         public void Initialize(Texture2D texture, Texture2D animeTexture, Vector2 position)
         {
+            maxSpeed = 1;
+            maxVelocity.X = (float)Math.Sin(rotation) * maxSpeed;
+            maxVelocity.Y = (float)Math.Cos(rotation) * maxSpeed;
             speed = 1;
+            velocity.X = (float)Math.Sin(rotation) * speed;
+            velocity.Y = (float)Math.Cos(rotation) * speed;
             rotation = 0;
             PlayerTexture = texture;
             AnimeTexture = animeTexture;
@@ -46,7 +56,10 @@ namespace Monodemo
             nextPoi = position;
             Active = true;
             center = new Vector2(Width / 2, Height / 2);
-            playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);    
+            playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
+
+            health = 100f;
+              
         }
 
         public void Update(GameTime gameTime)
@@ -54,11 +67,26 @@ namespace Monodemo
         {
             velocity.X = (float)Math.Sin(rotation) * speed;
             velocity.Y = (float)Math.Cos(rotation) * speed;
-            nextPoi.X = Position.X + velocity.X;
-            nextPoi.Y = Position.Y + velocity.Y;
+            maxVelocity.X = (float)Math.Sin(rotation) * maxSpeed;
+            maxVelocity.Y = (float)Math.Cos(rotation) * maxSpeed;
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {
+                nextPoi.X = Position.X + velocity.X * 3f;
+                nextPoi.Y = Position.Y - velocity.Y * 3f;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {
+                nextPoi.X = Position.X - velocity.X * 3f;
+                nextPoi.Y = Position.Y + velocity.Y * 3f;
+            }
+            nextPoi.X = Position.X + maxVelocity.X * 10f;
+            nextPoi.Y = Position.Y - maxVelocity.Y * 10f;
+
             playerRec.X = (int)nextPoi.X - Width/2;
             playerRec.Y = (int)nextPoi.Y - Height/2;
-            UpdateAnime(gameTime);        
+            UpdateAnime(gameTime);    
+            
+                
         }
 
         private void UpdateAnime(GameTime gameTime)
@@ -80,23 +108,24 @@ namespace Monodemo
 
 
         #region movement
-        public void TurnLeft()
+        public void TurnLeft(GameTime gameTime)
         {
             rotation -= 0.05f;
         }    
 
-        public void TurnRight()
+        public void TurnRight(GameTime gameTime)
         {
             rotation += 0.05f;
         }
 
-        public void GoStraight()
+        public void GoStraight(GameTime gameTime)
         {
             Position.X += velocity.X;
             Position.Y -= velocity.Y;
+            AnimateHop(gameTime);
         }
 
-        public void GoBack()
+        public void GoBack(GameTime gameTime)
         {
             Position.X -= velocity.X;
             Position.Y += velocity.Y;
@@ -186,19 +215,10 @@ namespace Monodemo
                 {
                     Color sourceColor = sourceColors[(x - playerRec.Left) + (y - playerRec.Top) * Width];
                     Color targetColor = targetColors[(x - block.blockRec.Left) + (y - block.blockRec.Top) * block.Width];
-                    if (sourceColor.A > 0 && targetColor.A > 0)
+                    if (sourceColor.A > 0 && targetColor.A > 30)
                     {
                         Debug.WriteLine("Pixel Collision");
-                        if (currentKBState.IsKeyDown(Keys.Up))
-                        {
-                            //Position.X -= velocity.X;
-                            //Position.Y += velocity.Y;
-                        }
-                        if (currentKBState.IsKeyDown(Keys.Down))
-                        {
-                            //Position.X += velocity.X;
-                            //Position.Y -= velocity.Y;
-                        }
+
                         isCol = true;
                         break;
                     }
