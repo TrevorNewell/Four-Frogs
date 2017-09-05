@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI3.png</SourceFile>
-  <SourceTime>2017-09-04T16:20:55.1338908-06:00</SourceTime>
-  <DestFile>C:/github/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Graphics/GUI3.xnb</DestFile>
-  <DestTime>2017-09-04T19:14:15.6286633-06:00</DestTime>
+  <SourceFile>C:/Users/u0774750/Documents/GitHub/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI3.png</SourceFile>
+  <SourceTime>2017-09-05T11:49:59.1081295-06:00</SourceTime>
+  <DestFile>C:/Users/u0774750/Documents/GitHub/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Graphics/GUI3.xnb</DestFile>
+  <DestTime>2017-09-05T11:53:36.8678129-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T08:05:36-07:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

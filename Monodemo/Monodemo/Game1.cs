@@ -63,10 +63,27 @@ namespace Monodemo
 
         private bool gameStarted = false;
 
+        // Lighting variables
+        Texture2D lightMask;
+        float mouseX;
+        float mouseY;
+
+        RenderTarget2D lightsTarget;
+        RenderTarget2D mainTarget;
+
+        Effect lightingEffect;
+
+        float scale; // Current scale of our glow
+        float maxScale; // Max size of our glow
+        float minScale; // Minimum size of our glow
+        float rate; // How fast we lose our glow
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
             graphics.PreferredBackBufferWidth = 720;  // set this value to the desired width of your window
             graphics.PreferredBackBufferHeight = 450;   // set this value to the desired height of your window
             graphics.ApplyChanges();
@@ -80,6 +97,11 @@ namespace Monodemo
         /// </summary>
         protected override void Initialize()
         {
+            maxScale = 10;
+            minScale = 1;
+            rate = 0.01f;
+
+            scale = maxScale;
             player = new Player();
 
             blocks = new List<Block>();
@@ -130,7 +152,16 @@ namespace Monodemo
 
             mainBackground = Content.Load<Texture2D>("Graphics\\BG");
 
-            for(int i = 0; i < blocks.Count; i++)
+            lightMask = Content.Load<Texture2D>("Graphics\\sampleLightMask");
+            lightingEffect = Content.Load<Effect>("lighteffect");
+
+            var pp = GraphicsDevice.PresentationParameters;
+            lightsTarget = new RenderTarget2D(
+                GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+            mainTarget = new RenderTarget2D(
+                GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+
+            for (int i = 0; i < blocks.Count; i++)
             {
                 Vector2 poi = new Vector2(float.Parse(blocksTable.Rows[i+1][1].ToString()), float.Parse(blocksTable.Rows[i+1][2].ToString()));
                 blocks[i].Initialize(Content.Load<Texture2D>("graphics\\block" + Convert.ToString(i+1)), poi);
@@ -255,6 +286,11 @@ namespace Monodemo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            mouseX = Mouse.GetState().Position.X;
+            mouseY = Mouse.GetState().Position.Y;
+
+            if (scale > minScale) scale -= rate;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -335,7 +371,7 @@ namespace Monodemo
 
         private void updateGUI(GameTime gameTime)
         {            
-            if (currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed))
+            if (currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed) || (currentKeyboardState.IsKeyDown(Keys.Space) && !isKeyPressed))
             {
                 isKeyPressed = true;
                 if (index < 4)
@@ -358,6 +394,20 @@ namespace Monodemo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            // Create a Light Mask to pass to the pixel shader
+            GraphicsDevice.SetRenderTarget(lightsTarget);
+            GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+
+            // This is our light.
+            //spriteBatch.Draw(lightMask, new Vector2(player.Position.X - ((lightMask.Bounds.Width) * scale), player.Position.Y - ((lightMask.Bounds.Height) * scale)), null, Color.White, 0, new Vector2((lightMask.Bounds.Width/2)*scale, (lightMask.Bounds.Height/2))*scale, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(lightMask, new Vector2(mouseX - ((lightMask.Bounds.Width / 2) * scale), mouseY - ((lightMask.Bounds.Height / 2) * scale)), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+
+
+            // Our main scene.
+            GraphicsDevice.SetRenderTarget(mainTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null,camera.transform);
             spriteBatch.Draw(mainBackground, rectBackground, Color.White);
@@ -381,6 +431,16 @@ namespace Monodemo
             healthBar.Draw(spriteBatch, camera.center);
             healthBarBorders.Draw(spriteBatch, camera.center);
 
+            spriteBatch.End();
+
+
+            // Draw the main scene with a pixel
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            lightingEffect.Parameters["lightMask"].SetValue(lightsTarget);
+            lightingEffect.CurrentTechnique.Passes[0].Apply();
+            spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
