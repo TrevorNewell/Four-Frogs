@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/u0774750/Documents/Visual Studio 2017/Projects/SpriteSheetRunner/SpriteSheetRunner/Content/hopSheet.png</SourceFile>
-  <SourceTime>2017-08-29T12:19:00.1213831-06:00</SourceTime>
-  <DestFile>C:/Users/u0774750/Documents/Visual Studio 2017/Projects/SpriteSheetRunner/SpriteSheetRunner/Content/bin/Windows/hopSheet.xnb</DestFile>
-  <DestTime>2017-08-29T12:21:04.6537992-06:00</DestTime>
+  <SourceFile>C:/github/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/hopSheet.png</SourceFile>
+  <SourceTime>2017-08-29T12:39:41.8048701-06:00</SourceTime>
+  <DestFile>C:/github/Four-Frogs/SpriteSheetRunner/SpriteSheetRunner/Content/bin/Windows/hopSheet.xnb</DestFile>
+  <DestTime>2017-08-30T15:55:43.069908-06:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T08:05:36-07:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

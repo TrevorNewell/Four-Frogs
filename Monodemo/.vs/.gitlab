@@ -1,0 +1,11 @@
+{
+  "User": {
+    "id": 205,
+    "username": "kddean",
+    "name": "Khadeidre",
+    "email": "u1149097@utah.edu",
+    "new_portrait": null,
+    "host": "https://eae-git.eng.utah.edu/",
+    "two_factor_enabled": false
+  }
+}
