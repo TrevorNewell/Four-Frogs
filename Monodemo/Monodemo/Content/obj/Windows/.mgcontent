@@ -4,8 +4,6 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/bg.jpg</File>
-    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.mp3</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/player.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Dustbunny01.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/block0.png</File>
@@ -30,7 +28,22 @@
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block19.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Block20.png</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/BG.png</File>
-    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/Glow-Frog Floor(Prototype Placement).jpg</File>
     <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/hopSheet.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/collisionSound.wav</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/goldenball.wav</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/meetEnemy.wav</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/healthBarBorder.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI0.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI1.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI2.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI3.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/GUI4.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.MP3</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/healthBar.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/goldenball.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/sampleLightMask.png</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/lighteffect.fx</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/FAILscreen.jpg</File>
+    <File>C:/Users/u1149097/Source/Repos/Four-Frogs/Monodemo/Monodemo/Content/Graphics/newMaze.jpg</File>
   </SourceFiles>
 </SourceFileCollection>

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data;
@@ -32,41 +34,61 @@ namespace Monodemo
         TimeSpan previousSpawnTime;
         DataTable enemiesTable;
         const int NUM_OF_ENE = 7;
-        enum AiState
-        {
-            Chasing,
-
-            Wander
-        }
-        Vector2 enemyPosition;
-        float orientation = 0;
-        Vector2 enemyTextureCenter;
-        float enemyChaseDistance = 250.0f;
-        float enemyHysteresis = 15.0f;
-        float maxEnemySpeed = 5.0f;
-        float enemySpeed = 2.0f;
-        Vector2 wanderDirection;
-        Enemy enemy = new Enemy();
-        Random ran = new Random();
-
-        private Song gameMusic;
 
         List<Block> blocks;
         const int NUM_OF_BLOCKS = 20;
         DataTable blocksTable;
         CSVUtil csv;
+        Block ball;
+
+        List<GUI> GUIs;
+        GUI currentGUI;
+        const int NUM_OF_GUIS = 5;
+        int index = 0;
+        bool isKeyPressed = false;
+
+        GUI healthBar;
+        Rectangle healthBarRec;
+        GUI healthBarBorders;
+
+        GUI failScreen;
 
         Camera camera;
+
+        public Song gameMusic;
+        public SoundEffect meetEnemy;
+        public SoundEffectInstance meetEnemyInstance;
+        public SoundEffect goldenBall;
+        public SoundEffectInstance goldenBallInstance;
+        public SoundEffect collisionSound;
+        public SoundEffectInstance collisionSoundInstance;
+
+        private bool gameStarted = false;
+
+        // Lighting variables
+        Texture2D lightMask;
+        float mouseX;
+        float mouseY;
+
+        RenderTarget2D lightsTarget;
+        RenderTarget2D mainTarget;
+
+        Effect lightingEffect;
+
+        float scale; // Current scale of our glow
+        float maxScale; // Max size of our glow
+        float minScale; // Minimum size of our glow
+        float rate; // How fast we lose our glow
 
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 720;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 450;   // set this value to the desired height of your window
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            graphics.PreferredBackBufferWidth = 1440;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 900;   // set this value to the desired height of your window
             graphics.ApplyChanges();
-
         }
 
         /// <summary>
@@ -77,6 +99,11 @@ namespace Monodemo
         /// </summary>
         protected override void Initialize()
         {
+            maxScale = 1;
+            minScale = 0.3f;
+            rate = 0.0001f;
+
+            scale = maxScale;
             player = new Player();
 
             blocks = new List<Block>();
@@ -86,21 +113,31 @@ namespace Monodemo
             }    
             blocksTable = new DataTable();
             csv = new CSVUtil();
-            blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv"); 
+            blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv");
+            ball = new Block();
             
-            blocks.Add(new Block());
-            rectBackground = new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-
-            Viewport vp = graphics.GraphicsDevice.Viewport;
             enemies = new List<Enemy>();
             previousSpawnTime = TimeSpan.Zero;
             enemySpawnTime = TimeSpan.FromSeconds(1.0f);
             enemiesTable = csv.ReadCSV("Content\\Data\\enePoi.csv");
 
+            GUIs = new List<GUI>();
+            for(int i = 0; i<NUM_OF_GUIS; i++)
+            {
+                GUIs.Add(new GUI(graphics));
+            }
+            currentGUI = new GUI(graphics);
+            currentGUI = GUIs[index];
+
+            healthBar = new GUI(graphics);
+            healthBar.setOffset(10, -130);
+            healthBarBorders = new GUI(graphics); 
+            healthBarBorders.setOffset(10, -100);
+            failScreen = new GUI(graphics);
+
             camera = new Camera(GraphicsDevice.Viewport);
             rectBackground = new Rectangle(0, 0, 1440, 900);
 
-            enemyPosition = new Vector2(vp.Width / 4, vp.Height / 2);
             base.Initialize();
         }
 
@@ -112,27 +149,53 @@ namespace Monodemo
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             Vector2 playerPosition = new Vector2(50, 100);
             player.Initialize(Content.Load<Texture2D>("Graphics\\player"), Content.Load<Texture2D>("Graphics\\hopSheet"), playerPosition);
 
-            mainBackground = Content.Load<Texture2D>("Graphics\\BG");
+            mainBackground = Content.Load<Texture2D>("Graphics\\newMaze");
 
-            for(int i = 0; i < blocks.Count; i++)
+            lightMask = Content.Load<Texture2D>("Graphics\\sampleLightMask");
+            lightingEffect = Content.Load<Effect>("lighteffect");
+
+            var pp = GraphicsDevice.PresentationParameters;
+            lightsTarget = new RenderTarget2D(
+                GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+            mainTarget = new RenderTarget2D(
+                GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+
+           /* for (int i = 0; i < blocks.Count; i++)
             {
                 Vector2 poi = new Vector2(float.Parse(blocksTable.Rows[i+1][1].ToString()), float.Parse(blocksTable.Rows[i+1][2].ToString()));
                 blocks[i].Initialize(Content.Load<Texture2D>("graphics\\block" + Convert.ToString(i+1)), poi);
-            }
+            }*/
+            ball.Initialize(Content.Load<Texture2D>("graphics\\goldenball"), new Vector2(600f, 425f));
+            
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
+            meetEnemy = Content.Load<SoundEffect>("Sounds\\meetEnemy");
+            meetEnemyInstance = meetEnemy.CreateInstance();
+            goldenBall = Content.Load<SoundEffect>("Sounds\\goldenBall");
+            goldenBallInstance = goldenBall.CreateInstance();
+            collisionSound = Content.Load<SoundEffect>("Sounds\\collisionSound");
+            collisionSoundInstance = collisionSound.CreateInstance();
 
             enemyTexture = Content.Load<Texture2D>("graphics\\Dustbunny01");
             for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].Initialize(enemyTexture, Vector2.Zero);
             }
-            enemyTextureCenter = new Vector2(enemyTexture.Width / 2, enemyTexture.Height / 2);
-            // TODO: use this.Content to load your game content here
+
+            for (int i = 0; i < NUM_OF_GUIS; i++)
+            {
+                GUIs[i].LoadContent(Content.Load<Texture2D>("graphics\\GUI"+i.ToString()));                
+            }
+
+            healthBar.LoadContent(Content.Load<Texture2D>("graphics\\healthBar"));
+            healthBar.GUIRectangle = new Rectangle(0, 0, 200, 20);
+            healthBarBorders.LoadContent(Content.Load<Texture2D>("graphics\\healthBarBorder"));
+            failScreen.LoadContent(Content.Load<Texture2D>("graphics\\FAILscreen"));
         }
 
         private void AddEnemy()
@@ -186,18 +249,16 @@ namespace Monodemo
 
         private void UpdateEnemies(GameTime gameTime)
         {
+            if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
+            {
+                previousSpawnTime = gameTime.TotalGameTime;
 
+                AddEnemy();
 
-            //if (gameTime.TotalGameTime - previousSpawnTime > enemySpawnTime)
-            //{
-               // previousSpawnTime = gameTime.TotalGameTime;
-
-               AddEnemy();
-
-            //}
+            }
 
             for (int i = enemies.Count - 1; i >= 0; i--)
-            {
+             {
 
                 enemies[i].Update(gameTime);
 
@@ -211,111 +272,7 @@ namespace Monodemo
 
             }
 
-            
-            
-            AiState enemyState = AiState.Wander;
-            float enemyChaseThreshold = enemyChaseDistance;
-            Enemy e = new Enemy();
-            
-    
-            for (int i = enemies.Count - 1; i >= 0; i--)
-            {
-                e = enemies[i];
-                enemyPosition = e.Position;                
-                
-
-                if (enemyState == AiState.Wander)
-                {
-                    enemyChaseThreshold -= enemyHysteresis / 2;
-                }
-                else if(enemyState == AiState.Chasing)
-                {
-                    enemyChaseThreshold += enemyHysteresis / 2;
-                }
-
-                if (enemyState == AiState.Wander)
-                {
-
-                    Wander(enemyPosition, ref wanderDirection, ref orientation,
-                        e.enemyTurnSpeed);
-                    enemySpeed = .25f * maxEnemySpeed;
-
-                }
-                else if(enemyState == AiState.Chasing)
-                {
-                    orientation = TurnToFace(enemyPosition, player.Position, orientation, e.enemyTurnSpeed);
-                }
-                Vector2 heading = new Vector2(
-                    (float)Math.Cos(orientation), (float)Math.Sin(orientation));
-                enemyPosition += heading * enemySpeed;
-
-            }
         }
-
-            private void Wander(Vector2 position, ref Vector2 wanderDirection, ref float orientation, float turnSpeed)
-            {
-                wanderDirection.X += MathHelper.Lerp(-.25f, .25f, (float)ran.NextDouble());
-                wanderDirection.Y += MathHelper.Lerp(-.25f, .25f, (float)ran.NextDouble());
-
-                if (wanderDirection != Vector2.Zero)
-                {
-                 wanderDirection.Normalize();
-                }
-
-                orientation = TurnToFace(position, position + wanderDirection, orientation, .15f * turnSpeed);
-                Vector2 screenCenter = Vector2.Zero;
-                screenCenter.X = graphics.GraphicsDevice.Viewport.Width / 2;
-                screenCenter.Y = graphics.GraphicsDevice.Viewport.Width / 2;
-
-                float distanceFromScreenCenter = Vector2.Distance(screenCenter, position);
-                float MaxDistanceFromScreenCenter = Math.Min(screenCenter.Y, screenCenter.X);
-                float normalizedDistance = distanceFromScreenCenter / MaxDistanceFromScreenCenter;
-                float turnToCenterSpeed = .3f * normalizedDistance * normalizedDistance * turnSpeed;
-
-                orientation = TurnToFace(position, screenCenter, orientation, turnToCenterSpeed);
-            }
-
-
-            private static float TurnToFace(Vector2 position, Vector2 faceThis, float currentAngle, float turnSpeed)
-            {
-
-                float x = faceThis.X - position.X;
-                float y = faceThis.Y - position.Y;
-
-
-                float desiredAngle = (float)Math.Atan2(y, x);
-
-
-                float difference = WrapAngle(desiredAngle - currentAngle);
-
-
-                difference = MathHelper.Clamp(difference, -turnSpeed, turnSpeed);
-
-                return WrapAngle(currentAngle + difference);
-            }
-
-            private static float WrapAngle(float radians)
-            {
-                while (radians < -MathHelper.Pi)
-                {
-                    radians += MathHelper.TwoPi;
-                }
-                while (radians > MathHelper.Pi)
-                {
-                    radians -= MathHelper.TwoPi;
-                }
-                return radians;
-            }
-
-            private Vector2 ClampToViewport(Vector2 vector)
-            {
-                Viewport vp = graphics.GraphicsDevice.Viewport;
-                vector.X = MathHelper.Clamp(vector.X, vp.X, vp.X + vp.Width);
-                vector.Y = MathHelper.Clamp(vector.Y, vp.Y, vp.Y + vp.Height);
-                return vector;
-            }
-
-
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -333,6 +290,11 @@ namespace Monodemo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            mouseX = Mouse.GetState().Position.X;
+            mouseY = Mouse.GetState().Position.Y;
+
+            if (scale > minScale) scale -= rate;
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -346,26 +308,15 @@ namespace Monodemo
 
             //Update the player            
             player.Update(gameTime);
-            for (int i = 0; i < blocks.Count; i++)
-            {
-                blocks[i].Update();
-                player.DetectCol(blocks[i]);
-                enemies[i].DetectCol(blocks[i]);
-            }
-            
-            for(int i = 0; i <enemies.Count; i++)
-            {
-                enemies[i].DetectColPlayer(player);
-            }
+            /* for (int i = 0; i < blocks.Count; i++)
+             {
+                 blocks[i].Update();
+                 player.DetectCol(blocks[i]);
+             }*/
+            player.DetectCol(ball);
             UpdatePlayer(gameTime);            
            
             //Update the enemies
-
-            for(int i = enemies.Count-1; i>=0; i--)
-            { 
-                enemy = enemies[i];
-                enemy.Update(gameTime);
-            }
             UpdateEnemies(gameTime);
 
             //zoom
@@ -374,33 +325,82 @@ namespace Monodemo
                 camera.zoom += 0.1f;
             if (Keyboard.GetState().IsKeyDown(Keys.S))
                 camera.zoom -= 0.1f;
-            enemyPosition = ClampToViewport(enemyPosition);
+
+            updateGUI(gameTime);
 
             base.Update(gameTime);
         }
 
         private void UpdatePlayer(GameTime gameTime)
         {
+
             if (currentKeyboardState.IsKeyDown(Keys.Left))
             {
-                player.TurnLeft();
+                player.TurnLeft(gameTime);
             }
             if (currentKeyboardState.IsKeyDown(Keys.Right))
             {
-                player.TurnRight();
+                player.TurnRight(gameTime);
             }
             if (currentKeyboardState.IsKeyDown(Keys.Up) && (!player.isCol))
             {
-                player.GoStraight();
+                player.GoStraight(gameTime);
             }
-            if (currentKeyboardState.IsKeyDown(Keys.Down))
+            if (currentKeyboardState.IsKeyDown(Keys.Down) && (!player.isCol))
             {
-                player.GoBack();
+                player.GoBack(gameTime);
+            }
+
+            //controller
+            if(Math.Abs(currentGamePadState.ThumbSticks.Left.X)>0.2f || Math.Abs(currentGamePadState.ThumbSticks.Left.Y) > 0.2f)
+            {
+                double X = currentGamePadState.ThumbSticks.Left.X;
+                double Y = currentGamePadState.ThumbSticks.Left.Y;
+                double R = Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2));                
+                player.rotation = (float)Math.Acos(Y/R);
+                if(X < 0)
+                {
+                    player.rotation = -player.rotation;
+                }
+
+                if (!player.isCol)
+                {
+                    player.GoStraight(gameTime);
+                }                
             }
             
             //detect the collision with border
             player.Position.X = MathHelper.Clamp(player.Position.X, 0, 1440 - player.Width);
             player.Position.Y = MathHelper.Clamp(player.Position.Y, 0, 900 - player.Height);
+        }
+
+        private void updateGUI(GameTime gameTime)
+        {            
+            if (currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed) || (currentKeyboardState.IsKeyDown(Keys.Space) && !isKeyPressed))
+            {
+                isKeyPressed = true;
+                if (index < 4)
+                {
+                    index++;
+                    currentGUI = GUIs[index];
+                }
+                else
+                {
+                    startGame(); 
+                }                
+            }
+            if (currentGamePadState.IsButtonUp(Buttons.A) && (isKeyPressed))
+                isKeyPressed = false;
+
+            if(player.health <= 0f)
+            {
+                currentGUI = failScreen;
+            }
+
+            if(player.isColBall(ball))
+            {
+                currentGUI = failScreen;
+            }
         }
 
         /// <summary>
@@ -409,24 +409,69 @@ namespace Monodemo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            // Create a Light Mask to pass to the pixel shader
+            GraphicsDevice.SetRenderTarget(lightsTarget);
+            GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null);
+
+            // This is our light.
+            //spriteBatch.Draw(lightMask, new Vector2(player.Position.X - ((lightMask.Bounds.Width) * scale), player.Position.Y - ((lightMask.Bounds.Height) * scale)), null, Color.White, 0, new Vector2((lightMask.Bounds.Width/2)*scale, (lightMask.Bounds.Height/2))*scale, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(lightMask, new Vector2(player.Position.X - ((lightMask.Bounds.Width / 2) * scale), player.Position.Y - ((lightMask.Bounds.Height / 2) * scale)), null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+
+            spriteBatch.End();
+
+
+            // Our main scene.
+            GraphicsDevice.SetRenderTarget(mainTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null,camera.transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null);
             spriteBatch.Draw(mainBackground, rectBackground, Color.White);
             player.Draw(spriteBatch);
-            for (int i = 0; i < blocks.Count; i++)
+            
+           /* for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].Draw(spriteBatch);
+            }*/
+
+            ball.Draw(spriteBatch);
+
+            for (int i = 0; i < enemies.Count; i++)
+            { 
+                enemies[i].Draw(spriteBatch);
             }
 
-            
-            for (int i = 0; i < enemies.Count; i++)
-                {
-                    enemies[i].Draw(spriteBatch);
-                }
+            spriteBatch.End();
+
+
+            // Draw the main scene with a pixel
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            lightingEffect.Parameters["lightMask"].SetValue(lightsTarget);
+            lightingEffect.CurrentTechnique.Passes[0].Apply();
+            spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);
+            spriteBatch.End();
+
+            // UI
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.transform);
+
+            currentGUI.Draw(spriteBatch, camera.center);
+            if (gameStarted == true)
+                healthBar.GUIRectangle.Width = (int)player.health;
+            healthBar.Draw(spriteBatch, camera.center);
+            healthBarBorders.Draw(spriteBatch, camera.center);
 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void startGame()
+        {
+            currentGUI.origin = new Vector2(500f, 1000f);
+            healthBar.setOffset(10, 13);
+            healthBarBorders.setOffset(10, 10);
+            gameStarted = true;
         }
     }
 }
