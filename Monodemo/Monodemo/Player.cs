@@ -185,6 +185,12 @@ namespace Monodemo
 
 
         #region collision detection
+        public bool isColBall(Block ball)
+        {
+            isCol = DetectPixelCol(ball);
+            return isCol;
+        }
+
         public void DetectCol(Block block)
         {            
             if (playerRec.Intersects(block.blockRec))

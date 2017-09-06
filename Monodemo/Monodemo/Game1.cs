@@ -51,6 +51,8 @@ namespace Monodemo
         Rectangle healthBarRec;
         GUI healthBarBorders;
 
+        GUI failScreen;
+
         Camera camera;
 
         public Song gameMusic;
@@ -84,8 +86,8 @@ namespace Monodemo
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            graphics.PreferredBackBufferWidth = 720;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 450;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = 1440;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 900;   // set this value to the desired height of your window
             graphics.ApplyChanges();
         }
 
@@ -130,7 +132,8 @@ namespace Monodemo
             healthBar = new GUI(graphics);
             healthBar.setOffset(10, -130);
             healthBarBorders = new GUI(graphics); 
-            healthBarBorders.setOffset(10, -100);       
+            healthBarBorders.setOffset(10, -100);
+            failScreen = new GUI(graphics);
 
             camera = new Camera(GraphicsDevice.Viewport);
             rectBackground = new Rectangle(0, 0, 1440, 900);
@@ -150,7 +153,7 @@ namespace Monodemo
             Vector2 playerPosition = new Vector2(50, 100);
             player.Initialize(Content.Load<Texture2D>("Graphics\\player"), Content.Load<Texture2D>("Graphics\\hopSheet"), playerPosition);
 
-            mainBackground = Content.Load<Texture2D>("Graphics\\BG");
+            mainBackground = Content.Load<Texture2D>("Graphics\\newMaze");
 
             lightMask = Content.Load<Texture2D>("Graphics\\sampleLightMask");
             lightingEffect = Content.Load<Effect>("lighteffect");
@@ -161,13 +164,13 @@ namespace Monodemo
             mainTarget = new RenderTarget2D(
                 GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
 
-            for (int i = 0; i < blocks.Count; i++)
+           /* for (int i = 0; i < blocks.Count; i++)
             {
                 Vector2 poi = new Vector2(float.Parse(blocksTable.Rows[i+1][1].ToString()), float.Parse(blocksTable.Rows[i+1][2].ToString()));
                 blocks[i].Initialize(Content.Load<Texture2D>("graphics\\block" + Convert.ToString(i+1)), poi);
-            }
-            ball.Initialize(Content.Load<Texture2D>("graphics\\goldenball"), new Vector2(508f, 847f));
-
+            }*/
+            ball.Initialize(Content.Load<Texture2D>("graphics\\goldenball"), new Vector2(600f, 425f));
+            
 
             gameMusic = Content.Load<Song>("Sounds\\bgm");
             MediaPlayer.Play(gameMusic);
@@ -192,6 +195,7 @@ namespace Monodemo
             healthBar.LoadContent(Content.Load<Texture2D>("graphics\\healthBar"));
             healthBar.GUIRectangle = new Rectangle(0, 0, 200, 20);
             healthBarBorders.LoadContent(Content.Load<Texture2D>("graphics\\healthBarBorder"));
+            failScreen.LoadContent(Content.Load<Texture2D>("graphics\\FAILscreen"));
         }
 
         private void AddEnemy()
@@ -304,11 +308,12 @@ namespace Monodemo
 
             //Update the player            
             player.Update(gameTime);
-            for (int i = 0; i < blocks.Count; i++)
-            {
-                blocks[i].Update();
-                player.DetectCol(blocks[i]);
-            }
+            /* for (int i = 0; i < blocks.Count; i++)
+             {
+                 blocks[i].Update();
+                 player.DetectCol(blocks[i]);
+             }*/
+            player.DetectCol(ball);
             UpdatePlayer(gameTime);            
            
             //Update the enemies
@@ -386,6 +391,16 @@ namespace Monodemo
             }
             if (currentGamePadState.IsButtonUp(Buttons.A) && (isKeyPressed))
                 isKeyPressed = false;
+
+            if(player.health <= 0f)
+            {
+                currentGUI = failScreen;
+            }
+
+            if(player.isColBall(ball))
+            {
+                currentGUI = failScreen;
+            }
         }
 
         /// <summary>
@@ -397,7 +412,7 @@ namespace Monodemo
             // Create a Light Mask to pass to the pixel shader
             GraphicsDevice.SetRenderTarget(lightsTarget);
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null, camera.transform);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, null, null, null, null);
 
             // This is our light.
             //spriteBatch.Draw(lightMask, new Vector2(player.Position.X - ((lightMask.Bounds.Width) * scale), player.Position.Y - ((lightMask.Bounds.Height) * scale)), null, Color.White, 0, new Vector2((lightMask.Bounds.Width/2)*scale, (lightMask.Bounds.Height/2))*scale, scale, SpriteEffects.None, 0f);
@@ -409,14 +424,14 @@ namespace Monodemo
             // Our main scene.
             GraphicsDevice.SetRenderTarget(mainTarget);
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null,camera.transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null,null,null,null);
             spriteBatch.Draw(mainBackground, rectBackground, Color.White);
             player.Draw(spriteBatch);
             
-            for (int i = 0; i < blocks.Count; i++)
+           /* for (int i = 0; i < blocks.Count; i++)
             {
                 blocks[i].Draw(spriteBatch);
-            }
+            }*/
 
             ball.Draw(spriteBatch);
 
