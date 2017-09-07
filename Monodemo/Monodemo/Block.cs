@@ -40,8 +40,8 @@ namespace Monodemo
         public void Draw(SpriteBatch spriteBatch)
 
         {
-            Vector2 drawPosition = new Vector2(position.X + (float)(Width * 0.08), position.Y+(float)(Height * 0.01));
-            spriteBatch.Draw(blockTexture, position, null, Color.White, rotation, center, 1f, SpriteEffects.None, 0f);
+            Vector2 drawPosition = new Vector2(position.X + (float)(Width * 0.01f), position.Y);
+            spriteBatch.Draw(blockTexture, drawPosition, null, Color.White, rotation, center, 1f, SpriteEffects.None, 0f);
             //spriteBatch.Draw(blockRec, new Vector2(blockRec.X, blockRec.Y), Color.Wheat);
         }
     }

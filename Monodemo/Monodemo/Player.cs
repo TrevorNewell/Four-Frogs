@@ -221,7 +221,7 @@ namespace Monodemo
                 {
                     Color sourceColor = sourceColors[(x - playerRec.Left) + (y - playerRec.Top) * Width];
                     Color targetColor = targetColors[(x - block.blockRec.Left) + (y - block.blockRec.Top) * block.Width];
-                    if (sourceColor.A > 0 && targetColor.A > 30)
+                    if (sourceColor.A > 20 && targetColor.A > 50)
                     {
                         Debug.WriteLine("Pixel Collision");
 
