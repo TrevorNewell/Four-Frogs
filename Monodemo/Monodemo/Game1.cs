@@ -411,8 +411,7 @@ namespace Monodemo
         private void updateGUI(GameTime gameTime)
         {
 
-            if ((currentKeyboardState.IsKeyDown(Keys.Space) && (!isKeyPressed)))
-            //if ((currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed)))
+            if ((currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed)))
             {
                 isKeyPressed = true;
                 if (index < 1)
@@ -426,9 +425,7 @@ namespace Monodemo
                 }                
             }
 
-            //if ((currentGamePadState.IsButtonUp(Buttons.A) && (isKeyPressed)))
-            if ((currentKeyboardState.IsKeyUp(Keys.Space) && (isKeyPressed)))
-                
+            if ((currentGamePadState.IsButtonUp(Buttons.A) && (isKeyPressed)))      
                 isKeyPressed = false;
 
             if(player.health <= 0f)
