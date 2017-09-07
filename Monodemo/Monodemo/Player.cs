@@ -58,7 +58,7 @@ namespace Monodemo
             center = new Vector2(Width / 2, Height / 2);
             playerRec = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
 
-            health = 195f;
+            health = 190f;
               
         }
 

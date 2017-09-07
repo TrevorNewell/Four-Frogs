@@ -116,7 +116,7 @@ namespace Monodemo
             maxScale = 4f;
             minScale = 0.6f;
             rate = 0.4f;//rate = 0.0001f;
-            frequency = 5;
+            frequency = 10;
             scale = maxScale;
             timeElapsed = 0;
 
@@ -320,6 +320,7 @@ namespace Monodemo
             {
                 timeElapsed = 0;
                 scale -= rate;
+                meetEnemy.Play();
 
                 if (scale < minScale) scale = minScale;
             }
@@ -408,8 +409,10 @@ namespace Monodemo
         }
 
         private void updateGUI(GameTime gameTime)
-        {            
-            if ((currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed)))
+        {
+
+            if ((currentKeyboardState.IsKeyDown(Keys.Space) && (!isKeyPressed)))
+            //if ((currentGamePadState.IsButtonDown(Buttons.A) && (!isKeyPressed)))
             {
                 isKeyPressed = true;
                 if (index < 1)
@@ -422,7 +425,10 @@ namespace Monodemo
                     startGame(); 
                 }                
             }
-            if ((currentGamePadState.IsButtonUp(Buttons.A) && (isKeyPressed)))
+
+            //if ((currentGamePadState.IsButtonUp(Buttons.A) && (isKeyPressed)))
+            if ((currentKeyboardState.IsKeyUp(Keys.Space) && (isKeyPressed)))
+                
                 isKeyPressed = false;
 
             if(player.health <= 0f)
@@ -509,8 +515,8 @@ namespace Monodemo
         public void startGame()
         {
             currentGUI.origin = new Vector2(500f, 2000f);
-            healthBar.setOffset(10, 13);
-            healthBarBorders.setOffset(10, 10);
+            healthBar.setOffset(402, 18);
+            healthBarBorders.setOffset(400, 10);
             gameStarted = true;
         }
     }

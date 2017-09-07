@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/u0774750/Documents/GitHub/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.MP3</SourceFile>
-  <SourceTime>2017-09-06T19:02:47.6084082-06:00</SourceTime>
-  <DestFile>C:/Users/u0774750/Documents/GitHub/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Sounds/bgm.xnb</DestFile>
-  <DestTime>2017-09-06T19:04:52.7654681-06:00</DestTime>
+  <SourceFile>E:/project/github/Four-Frogs/Monodemo/Monodemo/Content/Sounds/bgm.MP3</SourceFile>
+  <SourceTime>2017-09-06T20:45:59.7614822-06:00</SourceTime>
+  <DestFile>E:/project/github/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Sounds/bgm.xnb</DestFile>
+  <DestTime>2017-09-06T22:34:22.426644-06:00</DestTime>
   <Importer>Mp3Importer</Importer>
   <ImporterTime>2017-03-01T08:05:36-07:00</ImporterTime>
   <Processor>SongProcessor</Processor>
@@ -15,6 +15,6 @@
   <Dependencies />
   <BuildAsset />
   <BuildOutput>
-    <string>C:/Users/u0774750/Documents/GitHub/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Sounds/bgm.wma</string>
+    <string>E:/project/github/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Sounds/bgm.wma</string>
   </BuildOutput>
 </PipelineBuildEvent>
