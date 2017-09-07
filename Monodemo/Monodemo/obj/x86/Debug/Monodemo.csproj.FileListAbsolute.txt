@@ -326,3 +326,7 @@ C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\FA
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\newMaze.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\wall.xnb
 C:\github\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\victory.xnb
+C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\FAILscreen.xnb
+C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\newMaze.xnb
+C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\victory.xnb
+C:\Users\u0774750\Documents\GitHub\Four-Frogs\Monodemo\Monodemo\bin\Windows\x86\Debug\Content\Graphics\wall.xnb

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data;
 using System;
+using System.Timers;
 
 namespace Monodemo
 {
@@ -82,7 +83,8 @@ namespace Monodemo
         float maxScale; // Max size of our glow
         float minScale; // Minimum size of our glow
         float rate; // How fast we lose our glow
-
+        float frequency; // Every "frequency" seconds we'll lose "rate" from our "scale".
+        float timeElapsed;
 
         public Game1()
         {
@@ -102,11 +104,22 @@ namespace Monodemo
         /// </summary>
         protected override void Initialize()
         {
-            maxScale = 1.5f;
-            minScale = 0.6f;
-            rate = 0.0001f;
+            // For a difference in scale between 1.5 and 0.6, that's 0.9.  With a frequency of 10 and a rate of 0.1, that means our light will be minimum in 90 seconds.
+            //maxScale = 1.5f;
+            //minScale = 0.6f;
+            //rate = 0.1f;//rate = 0.0001f;
+            //frequency = 2;
+            //scale = maxScale;
+            //timeElapsed = 0;
 
+            // Duration in seconds until we reach our minScale = ((maxScale - minScale)/rate) * frequency. 
+            maxScale = 4f;
+            minScale = 0.6f;
+            rate = 0.4f;//rate = 0.0001f;
+            frequency = 5;
             scale = maxScale;
+            timeElapsed = 0;
+
             player = new Player();
 
             blocks = new List<Block>();
@@ -301,8 +314,19 @@ namespace Monodemo
             mouseX = Mouse.GetState().Position.X;
             mouseY = Mouse.GetState().Position.Y;
 
-            if (scale > minScale) scale -= rate;
+            timeElapsed += 0.03f; // This is faked.  Not accurate if computer is running slowly.
 
+            if (timeElapsed > frequency && scale > minScale)
+            {
+                timeElapsed = 0;
+                scale -= rate;
+
+                if (scale < minScale) scale = minScale;
+            }
+
+            System.Console.WriteLine(timeElapsed);
+            //if (scale > minScale) scale -= rate;
+            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

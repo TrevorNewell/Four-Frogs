@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/github/Four-Frogs/Monodemo/Monodemo/Content/Sounds/collisionSound.wav</SourceFile>
-  <SourceTime>2017-09-03T16:16:33.6391003-06:00</SourceTime>
-  <DestFile>C:/github/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Sounds/collisionSound.xnb</DestFile>
-  <DestTime>2017-09-06T13:16:48.3862207-06:00</DestTime>
+  <SourceFile>C:/Users/u0774750/Documents/GitHub/Four-Frogs/Monodemo/Monodemo/Content/Sounds/collisionSound.wav</SourceFile>
+  <SourceTime>2017-09-06T19:02:47.6259424-06:00</SourceTime>
+  <DestFile>C:/Users/u0774750/Documents/GitHub/Four-Frogs/Monodemo/Monodemo/Content/bin/Windows/Sounds/collisionSound.xnb</DestFile>
+  <DestTime>2017-09-06T19:04:48.5821691-06:00</DestTime>
   <Importer>WavImporter</Importer>
   <ImporterTime>2017-03-01T08:05:36-07:00</ImporterTime>
   <Processor>SoundEffectProcessor</Processor>
