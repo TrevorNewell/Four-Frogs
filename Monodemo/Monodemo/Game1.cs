@@ -129,14 +129,14 @@ namespace Monodemo
             }    
             blocksTable = new DataTable();
             csv = new CSVUtil();
-            blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv");
+            //blocksTable = csv.ReadCSV("Content\\Data\\blockPoi.csv");
             ball = new Block();
             wall = new Monodemo.Block();
             
             enemies = new List<Enemy>();
             previousSpawnTime = TimeSpan.Zero;
             enemySpawnTime = TimeSpan.FromSeconds(1.0f);
-            enemiesTable = csv.ReadCSV("Content\\Data\\enePoi.csv");
+            //enemiesTable = csv.ReadCSV("Content\\Data\\enePoi.csv");
 
             GUIs = new List<GUI>();
             for(int i = 0; i<NUM_OF_GUIS; i++)
@@ -251,6 +251,7 @@ namespace Monodemo
             e7.Initialize(enemyTexture, p7);
             enemies.Add(e7);*/
 
+            /*
             for(int i = 0; i < NUM_OF_ENE; i++)
             {
                 Enemy enemy = new Enemy();
@@ -258,6 +259,7 @@ namespace Monodemo
                 enemy.Initialize(enemyTexture, poi);
                 enemies.Add(enemy);
             }
+            */
 
             //Vector2 position = new Vector2(GraphicsDevice.Viewport.Width + enemyTexture.Width / 2);
             //ran.Next(100, (GraphicsDevice.Viewport.Height - 100));
